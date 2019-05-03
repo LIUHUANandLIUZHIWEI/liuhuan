@@ -1,0 +1,123 @@
+	JSP
+	MVC开发模式
+	EL表达式
+	JSTL标签
+	三层架构
+
+##JSp
+	指令：
+		作用：用于配饰JSP页面，导入资源
+		格式：<%@ 指令名称 属性名1=属性值 属性名2=属性值2.。。%>
+		分类：
+			page：配置JSP页面或导入Java包名 如 java.util...
+				重要属性名 contentType：属性值 text/html 等同于response.setContentType("text/html;charset=utf-8");
+				设置响应体MIME类型以及字符集
+				设置当前jsp页面编码（只能是高级的IDE才能生效，如果使用低级工具，则需要设置pageEncoding属性设置当前页面的字符集）
+				import；导包 buff="19kb" 缓冲大小
+				errorPage；当前页面发生异常后，会自动跳转到指定页面
+				isErrorPage；标识当前也是错误页面 （设置  errorPage 属性值 设置为true 默认是false 这样可以使用内置对象 exeception）
+			include:页面包含的。导入页面的资源文件
+				<%@ include file="top.jsp"%> 可以在当前目录 显示top.jsp 内的内容
+			taglib:导入资源
+				<%@ taglib prefix="dd" uri="自定义标签库包名"%>
+	注释
+		1，HTML注释
+			<!-- -->只能注释HTML页面
+		2jsp注释
+			<%-- -->可以注释所有
+	
+
+	内置对象
+		在jsp页面中不需要创建，直接使用的对象（在普通页面有8个 其实是有九个）
+						真实类型			作用
+			pageContext	PageContext（他还可以获取其他八个对象）当前页面共享数据  pageContext.setAtttibute("名称"，"数据")就可以在本页面如何地方获取了
+			request			HTTPServletRequest		一次请求访问对个资源（转发）
+			session			HTTPSession			一次会话的多个请求间
+			application		ServletContext			所有用户间共享数据
+			response		HttpServletResponse		响应对象
+			page			Object				当前页面（servlet）对象 this
+			out			JspWrite			输出对象，数据输出到页面上
+			config			ServletConfig			servlet的配置对象
+			exception		Throwable			异常对象
+
+	##MVC：开发模式
+		MVC：
+			M；Model 模型
+				完成具体的业务操作；如查询数据库，封装对象
+			V；View 视图
+				展示数据
+			C；Controller 控制器
+				获取用户的输入
+				调用模型
+				将数据交给视图进行展示
+			优缺点
+				1，优点；
+					耦合性低，方便维护，可以鲤鱼分工合作
+					重用性，
+				2，缺点
+					使得项目架构变的复杂， 对开发人员要求高
+
+	###	EL表达式
+			概念：Expression Language 表达式语言
+			作用；替换和简化jsp页面中java代码的编写
+			语法；${表达式}
+			注意：jsp默认支持EL表达式，如果要忽略EL表达式
+				1，设置jsp中page指令中 ：isELIgnored="true"忽略当前页面中所有的EL表达式
+				2，\${表达式}；忽略当前这个EL表达式 
+	
+		使用：
+			1，运算
+				算数预算符：预算符 + - * / /(div) %(mod)
+				比较运算符；> < >= <= == !=
+				逻辑预算符； &&(and) ||(or) !(not)
+				空预算符；empty
+					功能：用于判断字符串、集合、数组对象是否为null或者长度是否为0
+						${empty list}
+						${not empty str}表示判断字符串、集合、数组对象是否不为null 并且长度》0
+			2，获取值 
+				1，EL表达式只能从域对象中获取值
+					${域名.键名}；从指定域中获取指定键的值
+							1，pageScope		--》pageContext
+							2，requestScope		--》request
+							3，sessionScope		--》session
+							4，applicationScope	--》application（ServletContext）
+						举例：在request域中储存了name=张三   获取${requestScope.name} 
+							${键名}表示依次从最小的域中查找是否有该键对应的值，直到找到为止。		 
+						
+				
+					获取对象、List集合、Map集合
+						1，对象${域名.键名.属性名}
+							本质上会去调用getter方法
+ 						2，List集合 ${域名称.键名[索引]}
+						
+						3，Map集合；${域名.键名.key名称}  ${域名.键名【“key名称”】}
+				
+				隐式对象：
+					EL表达式中有11个隐式对象
+						pageContext：获取jsp其他八个内置对象 ${pageContext.request.contextPath};动态获取虚拟目录
+
+
+	###	JSTL
+			概念；Javaserver Page Tag Library JSP标准标签库
+				是由Apache组织提供的开源的免费的jsp标签
+		
+			作用：用于简化和替换jsp页面上的java代码
+
+			使用步骤：
+				导入jar包
+				引入标签库 taglib指令  <%@ taglib%>
+				使用标签库
+			常用的JSTL标签
+				if		: 相当与 if
+					属性：text 必须属性，接收boolean表达式 
+						如果表达式为true，则显示标签体内容
+						一般情况下，test属性值会结合EL表达式一起使用
+						注意，c:if标签没有else情况，想要else情况，则可以在定义一个c:if标签
+				
+
+				choose		：相当于switch
+					使用choose标签声明		相当于switch声明
+					使用when标签做判断		相当于case
+					使用otherwise标签作为其他情况的声明 相当于default
+
+				foreach		；相当于for

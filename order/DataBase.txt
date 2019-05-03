@@ -1,0 +1,570 @@
+数据库（DataBase）
+	DBA(DataBase Administrator)
+	DBMS(DataBase Manager System)
+
+	常用的数据库软件
+		Access
+		MySql,SqlServer
+		Oracle,DB2,Sybase
+	
+	Oracle数据库
+		Oracle公司开发的
+		  神谕 ，甲骨文公司
+		oracle软件版本
+			Oracle8,Oracle8i
+			Oracle9i
+			Oracle10g,gride
+			Oracle11g
+			....
+	SQL(Structure Query Language,结构化查询语言)
+		
+		功能不同，不同分类
+			DDL(数据定义语言)：create/drop/alter
+			DML(数据操作语言)：delete/update/insert
+			DQL(数据查询语言)：select
+			TCL(事务控制语言)：commit,rollback,savepoint
+			DCL(数据控制语言)：grant,revoke
+	Oracle数据库安装：
+		省略
+		提供学习账户scott/tiger
+		EMP,DEPT,SALEGRADE
+
+	OracleServiceXE   主服务
+	OracleXETNSListener 监听服务
+
+	 
+
+	查询语句（DQL）
+		简单查询
+		select 列名(字段名),列名(字段名)|* from 表名
+		SQL> select ename,sal from emp;
+		1.查询过程中进行简单算术运算
+		SQL> select ename,12*sal from emp;
+		2.字段连接 ||
+		SQL> select ename||job from emp;
+		3.查询过程中可以给字段取别名
+		[as] 别名
+		SQL> select ename,12*sal as 年薪 from emp;
+		如果别名中含有特殊字符，使用双引号
+		SQL> select ename,12*sal as "年    薪" from emp;
+		4.给表取别名
+		SQL> select e.* from emp e;
+
+		条件查询
+		select 列名(字段名),列名(字段名)|* from 表名 where 查询条件
+		会将符合条件的数据记录查询显示
+
+		1.使用比较运算符
+		SQL> select * from emp where sal>3000;
+		查询过程中关键字，字段名称，表名是大小写不区分的
+		但是数据是大小写敏感的
+		SQL> select ename,sal from emp where ename='SMITH';
+		2.in关键字
+		SQL> select * from emp where deptno in (10,20);
+		3.not in 关键字
+		SQL> select * from emp where deptno not in (10,20);
+		4. and 关键字，or 关键字
+		查询10号部门或者20号部门的所有员工
+		SQL> select * from emp where deptno=10 or deptno=20;
+		SQL> select * from emp where deptno=10 and job='MANAGER';
+		5.between ... and ... 关键字
+		SQL> select * from emp where sal between 2000 and 4000;
+		注意：查询时包含边界，并且较小的数据放前面
+		练习：
+		年薪大于50000的人的所有信息
+		SQL> select * from emp where 12*sal>50000;
+		所有的经理的信息
+		SQL> select * from emp where job='MANAGER';
+		6.模糊查询
+			like   %匹配多个字符或者_匹配一个字符
+
+		查询所有名称以A字符开始的人的信息
+		SQL> select * from emp where ename like 'A%';
+		SQL> select * from emp where ename like '_A%';
+		匹配名字是以'_'开始的人的信息
+		设置escape '\' 转义符
+		SQL> select * from emp where ename like '\_%' escape '\';
+		7.匹配是否为空(null) is null /is not null
+		查询所有奖金不为null的人的信息
+		SQL> select * from emp where comm is not null;
+		查询所有奖金为null的人的信息
+		SQL> select * from emp where comm is  null;
+		8.distinct 关键字
+		去除重复的记录，只能出现在紧跟select关键字之后
+		查询所有的职位
+		SQL> select distinct job from emp;
+		查询每个部门都有哪些职位，不显示重复记录
+		SQL> select distinct job, deptno  from emp;
+		9.order by 关键字给记录排序
+		order by 排序的字段   asc 升序排列/desc 降序排列
+		默认升序排序，并且不管语句多长，order by永远出现在语句最后
+		SQL> select * from emp order by sal desc;
+		SQL> select * from emp order by sal asc ;
+		SQL> select * from emp where comm is not null order by comm asc ;
+		注意：如果排序字段为空，则必须先去除空字段再排序
+		
+
+
+		练习
+		    --1、在部门30中员工的所有信息
+		    select * from emp where deptno=30;
+		    --2、列出职位为（MANAGER）的员工的编号，姓名
+		    select empno,ename from emp where job='MANAGER';
+		    /*3、找出奖金高于工资的员工*/
+		    select * from emp where  comm>sal;
+		    --4、找出每个员工奖金和工资的总和
+		    --null 与任何值进行算术运算，结果都为null
+		    select sal+nvl(comm,0) from emp;
+		    --5、找出部门10中的经理(MANAGER)和部门20中的普通员工(CLERK)
+		    select * from emp where (deptno=10 and job = 'MANAGER') OR (deptno=20 and job = 'CLERK');
+		    --6、找出部门10中既不是经理也不是普通员工，而且工资大于等于2000的员工
+		    select * from emp where (job !='MANAGER' and job!='CLERK') and sal >=2000 and deptno=10;
+		    select * from emp where job not in('MANAGER','CLERK') and sal>=2000 and deptno=10;
+		    --7、找出有奖金的员工的不同工作
+		    select distinct job from emp where comm is not null
+		    --8、找出没有奖金或者奖金低于500的员工
+		    select * from emp where comm is null or comm<500;
+
+		查询中使用函数
+		    1.数字函数
+		    floor() 向下取整,ceil() 向上取整,round()四舍五入
+		    SQL> select floor(6.9) from dual;
+		    SQL> select round(6.4999999999) from dual;
+		    SQL> select ceil(6.0) from dual;
+		    2.字符串函数
+		    length(字段) 长度
+		    SQL> select length(ename) from emp;
+		    查询出员工的姓名，姓名的长度，姓名的[2,3]位字符
+		    substr(字符串,开始位置,长度) 截取子字符串
+		    upper(字符串) 大写显示
+		    lower(字符串) 小写显示
+		    SQL> select upper('aa') from dual;
+		    SQL> select lower('aA') from dual;
+		    concat(字符串1,字符串2) 字符串连接
+		    SQL> select concat('hello','world') from dual;
+		    SQL> select concat(concat('hello','world'),'aaa') from dual;
+		    initcap(字符串) 首字母大写
+		    SQL> select initcap('hello') from dual;
+		    3.日期函数
+		       获得系统时间 sysdate
+		    SQL> select sysdate from dual;
+		    日期+数字 = 日期
+		    SQL> select sysdate+1 from dual;
+		    日期-数字 = 日期
+		    SQL> select sysdate-1 from dual;
+		    日期-日期 = 天数
+		    SQL> select sysdate-sysdate from dual;
+		    
+		    4.转换函数
+		    to_date('',日期格式) 将字符串转换成日期
+		    SQL> select sysdate-to_date('2008-08-08','yyyy-MM-dd') from dual;
+		    查询员工表中在1982年之后入职的员工
+		    SQL> select * from emp where hiredate>to_date('1982-01-01','yyyy-MM-dd');
+		    to_char(日期,日期格式) 将日期转换成字符串
+		    SQL> select to_char(sysdate,'yy-MM-dd hh:mi:ss') from dual;
+		    SQL> select to_char(sysdate,'yy-MM-dd AM hh:mi:ss') from dual;
+		    SQL> select to_char(sysdate,'yy-MM-dd AM hh:mi:ss day') from dual;
+		    
+		    SQL> select * from emp where to_char(hiredate,'yyyy-MM-dd')='1982-01-23';
+		    SQL> select * from emp where hiredate=to_date('1982-01-23','yyyy-MM-dd');
+
+		    to_number() 将字符串转换成数字
+		    SQL> select to_number('$4.2','$9.9')+1 from dual;
+		    SQL> select to_number('￥88.8','L999.99') from dual;
+
+		    5.通用函数
+		    nvl(字段名称,默认值)  去除空值
+		    SQL> select sal+nvl(comm,0) from emp;
+		    decode(匹配量,1,'是1',2,'是2',3,'是3')
+		    SQL> select decode(length(ename),4,'是4',5,'是5',6,'是6') from emp;
+		    
+
+		    聚合(分组)函数
+			max() 求最大  number 数字,varchar2 字符串,date 日期
+			min() 求最小  number 数字,varchar2 字符串,date 日期
+			avg() 求平均  number 数字
+			sum() 求和    number 数字
+			count() 统计个数
+
+			都会将null值过滤
+			
+			关键字group by 分组字段 
+			SQL> select max(sal) from emp group by deptno;
+			SQL> select job,max(sal) from emp group by job;
+			分组函数查询过程中，如果查询字段除了分组函数以外还有其他字段
+			这些其他字段必须作为分组的条件
+
+			查询平均工资大于2000的部门编号以及平均工资
+			SQL> select deptno,avg(sal) from emp  group by deptno having avg(sal)>2000;
+			having 关键字用来对分组之后的结果进行条件过滤
+			having关键字不能单独使用
+			查询部门中最大工资大于3000的部门以及最高工资
+			SQL> select deptno,max(sal) from emp group by deptno having max(sal)>3000;
+			
+			组函数的嵌套使用
+			SQL> select min(max(sal)) from emp group by deptno;
+			查询字段只能是嵌套的组函数
+
+			查询出部门的最高工资，最低工资，平均工资，工资总和
+			SQL> select deptno,max(sal),min(sal),avg(sal),sum(sal) from emp group by deptno;
+
+		     多表连接查询
+			查询的数据分布在多个表
+			内连接  表1 inner join  表2  on  连接条件
+			内连接特点：将两个表中匹配的数据查询，找不到匹配记录的数据会被过滤
+
+			查询员工姓名以及所在部门的部门名称以及部门的位置
+			SQL> select ename,dname,loc from emp inner join dept on emp.deptno=dept.deptno;
+			SQL> select emp.ename,dept.dname,dept.loc from emp inner join dept on emp.deptno=dept.deptno;
+			SQL> select e.ename,d.dname,d.loc from emp e inner join dept d on e.deptno=d.deptno;
+			
+			select * from emp,dept where emp.deptno=dept.deptno;
+			查询员工的姓名，工资以及他的领导的姓名和工资
+			表的自身连接：表当中两个字段之间存在一定关联
+			select e.ename,e.sal,m.ename,m.sal from emp e inner join emp m on e.mgr = m.empno;
+			每个领导的下属中的最大工资
+			SQL> select max(sal) from emp group by mgr;
+			每个领导的姓名以及下属中的最大工资
+			SQL> select m.ename,max(e.sal) from emp e inner join emp m on e.mgr = m.empno group by m.ename;
+
+			外连接
+				外连接特点：将主表中的信息查询出来，匹配表中与主表中的记录匹配的数据查询出来
+					    不匹配的数据过滤
+				左外连接 left join 
+				SQL> select e.*,d.* from emp e left join dept d on e.deptno=d.deptno;
+
+
+				右外连接 right join 
+				SQL> select e.*,d.* from emp e right join dept d on e.deptno=d.deptno;
+
+			全外连接
+				full join 
+				将两个表中的所有数据都查询显示
+				SQL> select e.*,d.* from emp e full join dept d on e.deptno=d.deptno;
+
+				natural join 自然连接
+				SQL> select e.ename,d.dname from emp e natural join dept d ;
+				自然连接不能用*匹配字段
+			
+			笛卡尔积
+				cross join 获取笛卡尔积
+				总记录数= 表1记录*表2记录
+				select * from emp cross join dept;
+				select * from emp,dept;
+			
+			非等值连接
+			       on 连接条件不是采用'=',采用其他非等值连接符
+			       between ... and ....
+			       SQL> select e.ename,e.sal,s.grade from emp e,salgrade s 
+			       where e.sal between s.losal and s.hisal;
+
+			
+		    子查询
+			查询中嵌套查询，（将一个查询的结果作为表让其他查询进行查找）			
+			1.子查询返回一个值（一行一列）
+			采用比较运算符进行连接
+			SQL> select * from emp where sal=(select max(sal) from emp);
+			SQL> select * from emp where sal>(select avg(sal) from emp);
+			
+			2.子查询返回多个值（多行一列）
+			SQL> select * from emp where sal in(select max(sal) from emp group by deptno);
+			
+			查询出工资比每个部门中最高工资中的最低工资高的人的信息
+			SQL> select * from emp where sal > (select min(max(sal)) from emp group by deptno);
+		         可以采用in ，not in
+			 not in 进行匹配子查询过程中，子查询不能含有null
+			查找不是领导的人
+			SQL> select * from emp where empno not in(select mgr from emp where mgr is not null);
+
+			 =any 类似in的作用
+			 ,>any 大于子查询中的最小值
+			 ,<any 小于子查询中的最大值
+			 ,>all 大于子查询中的最大
+			 ,<all 小于子查询中的最小值
+
+			3.子查询返回多行多列
+			SQL> select * from emp where  (deptno,sal)   in  (select deptno,max(sal) from emp group by deptno);
+	
+			关联子查询
+			工资比本部门平均工资高的人
+			select * from emp out  where sal>(select avg(sal) from emp e  where out.deptno=e.deptno group by deptno);
+			查询工资比当前职位的平均工资高的人
+			SQL> select * from emp out where sal >(select avg(sal) from emp e where out.job=e.job group by job);
+			
+			查询进行集合的操作
+			并集(union,union all)，交集(intersect)，差集(minus)
+			select job from emp where deptno=10 union select job from emp where deptno=20;
+			SQL> select job from emp where deptno=10 union all select job from emp where deptno=20;
+			查询职位既在10号部门中也在20号部门中
+			SQL> select job from emp where deptno=10 intersect select job from emp where deptno=20;
+			
+			查询出只在10号部门中有在20号部门中没有的职位
+			SQL> select job from emp where deptno=10 minus select job from emp where deptno=20;
+
+	
+		DML(数据操作语言)
+			delete 删除,update 更新,insert 插入
+			1.insert into 表名 values(插入的对应值);
+			  insert into 表名(字段1,字段2...) values(插入的对应值);
+			SQL> insert into emp values(3333,'hello3','酱油哥',7839,sysdate-1,10000,0,40);
+			SQL> insert into emp(empno,ename,hiredate) values(2222,'hello',sysdate);
+			SQL> insert into emp values(4444,'hello4','酱油哥',7839,to_date('2015/01/01','yyyy/mm/dd'),10000,0,40);
+			一次插入多条语句
+			SQL> insert into 表名称  查询语句;
+			注意：插入的值与对应字段的类型必须匹配
+			      给部分字段插入值，则其他未插值的字段填充null
+			
+			2.update 表名称 set 更新内容(字段名=字段新值,字段名=字段新值...) where 条件;
+			SQL> update emp set sal=10000; 更新表中所有记录
+			更新员工2222的职位为SALESMAN
+			SQL> update emp set job='SALESMAN' where empno=2222; 
+			SQL> update emp set job='SALESMAN',sal=8000 where empno=2222;
+			
+			3.delete [from] 表名  
+			删除表中的所有的记录
+			SQL> delete from emp;
+			delete [from] 表名 where 条件
+			删除符合条件的记录
+			SQL> delete from emp where deptno=40;
+
+			!!!注意：执行DML操作一定要提交事务
+		
+		DDL(数据定义语言)
+			create创建，drop删除，alter更新，truncate截断
+			1.create 创建表结构
+			Oracle数据库中常用的数据类型
+					number  数字类型
+					number(4,2) 表示四位数字其中2位小数
+					date    日期类型
+					varchar2 字符串类型
+					     可变长度字符串
+					char    字符串类型
+					     固定长度字符串
+			create  table 表名称(
+				字段名称1 字段类型(长度),
+				字段名称2 字段类型(长度),
+				字段名称3 字段类型(长度)
+				......
+			); 
+			练习：
+				创建学生表（学号，姓名，性别，年龄）
+				SQL> create table student(sno number(4),sname varchar2(10),sex varchar2(10),age number(3));
+			
+			复制表结构
+				SQL> create table 表名 as select * from 被复制的表名  where 1<>1;
+			复制表结构连带数据
+				SQL> create table 表名 as select * from 被复制的表名;
+
+			2.drop table 表名
+				SQL> drop table xxxx;
+
+
+			3.截断表（删除表中数据）
+			SQL> truncate table 表名称;
+			
+			4.alter修改表结构
+			a.改变表的名称
+			SQL> rename 老的名字 to 新的名字;
+			b.修改字段名称
+			alter table 表名 rename column 字段名称 to 新的名字
+			SQL> alter table test_emp2 rename column ename to name;
+			c.添加字段
+			alter table 表名 add(字段名 字段类型(长度));
+			SQL> alter table test_emp2 add(sex varchar2(4));
+			d.删除字段
+			alter table 表名 drop(字段名);
+			SQL> alter table test_emp2 drop (job);
+			e.修改字段（字段类型，长度）
+			alter table 表名 modify(字段名 字段类型(长度));
+			SQL> alter table test_emp2 modify(name varchar2(5));
+			SQL> alter table test_emp2 modify(sex char(20));
+
+		
+		TCL(Transaction Control Language)
+			事务：什么是事务，事务的特点有哪些？
+				特点：ACID
+			commit,rollback,savepoint 
+			1.执行DML操作一定要做事务处理
+			commit 操作表示确定执行
+			       事务会提交给数据库，会将操作应用到数据库
+			rollback 操作表示取消执行
+			       事务取消相关操作，
+			       会让数据库的状态回到上一个事务结束的状态
+			savepoint 设置事务点
+				设置事务点
+				SQL> savepoint a;
+				回滚到事务点
+				SQL> rollback to a;
+			事务在DML语句执行的时候开启，并且一旦DML语句操作过程中
+			有事务存在，则使用当前事务,事务需要显示的提交或回滚。
+			
+		
+		约束(constraints)
+			保证数据的完整性
+			
+			列级别约束：
+			1.主键约束(primary key)
+				主键字段（唯一性,非空性）
+				ORA-00001: 违反唯一约束条件 (HELLO.PK_EMP)
+				ORA-01400: 无法将 NULL 插入 ("HELLO"."EMP"."EMPNO")
+				create table t_student(
+				       sno number(10) primary key,
+				       sname varchar2(10)
+				);
+
+			2.非空约束(not null)
+				字段值不允许为null
+				ORA-01400: 无法将 NULL 插入 ("HELLO"."T_STUDENT"."SNAME")
+				create table t_student(
+				       sno number(10) primary key,
+				       sname varchar2(10) not null
+				);
+
+			3.唯一约束(unique)
+				create table t_student(
+				       sno number(10) primary key,
+				       sname varchar2(10) not null,
+				       job varchar2(10) unique
+				);
+
+			4.检查约束(check)
+				对插入的值进行约束
+				ORA-02290: 违反检查约束条件 (HELLO.SYS_C004172)
+				create table t_student(
+				       sno number(10) primary key,
+				       sname varchar2(10) not null,
+				       job varchar2(10) unique,
+				       sex varchar2(10) check (sex in ('man','female'))
+				       
+				);
+
+			5.外键约束(foreign key)
+				体现表与表之间的关联关系
+				create table t_student(
+				       sno number(10) primary key,
+				       sname varchar2(10) not null,
+				       job varchar2(10) unique,
+				       sex varchar2(10) check (sex in ('man','female')),
+				       age number(3) check(age between 0 and 150),
+				       cno number(10) references t_class(cno)
+				);
+
+
+
+			建立表级别的约束
+			create table t_student(
+			       sid number(10),
+			       sname varchar2(10),
+			       --非空只有列级别约束
+			       sex varchar2(10) not null,
+			       age number(3),
+			       cid number(4),
+			       --表级别的约束
+			       constraint st_pk primary key (sid),
+			       constraint st_un unique (sname),
+			       constraint st_ck check (sex in ('man','female')),
+			       constraint st_ck1 check (age between 0 and 150),
+			       foreign key(cid) references t_class(cno)
+			);
+		    
+			创建联合主键
+			create table t_student(
+			       sid number(10),
+			       sname varchar2(10),
+			       --非空只有列级别约束
+			       sex varchar2(10) not null,
+			       age number(3),
+			       cid number(4),
+			       --表级别的约束
+			       --联合主键
+			       constraint st_pk primary key (sid,sname),
+			       constraint st_ck check (sex in ('man','female')),
+			       constraint st_ck1 check (age between 0 and 150),
+			       foreign key(cid) references t_class(cno)
+			);
+			建议：在创建表的同时创建对应的约束
+			
+			
+			视图（View）
+				能够显示所有的数据
+				视图的数据来源于表
+				简单视图
+				SQL> create view v_emp as select ename,sal from emp;
+				复杂视图
+					视图中的字段是多表连接，算术运算获得，调用函数
+				SQL> create view v_emp_sals2 as select ename,(sal+nvl(comm,0))*12  "年薪" from emp;
+				视图执行DML操作，必须提交事务
+				同时修改视图会对原始表中的数据进行更改
+				SQL> update v_emp set sal=1000 where ename='SMITH';
+			
+			伪列（rownum,rowid）
+				Oracle数据库特有的 rownum 表示记录的顺序号
+				SQL> select rownum,emp.* from emp where rownum<= 4;
+				只能查询比rownum小的记录，不能查询>rownum
+				
+				通过rownum进行分页
+				求差集获得分页记录，
+				SQL> select rownum,emp.* from emp where rownum<= 10 minus select rownum,emp.* from emp where rownum<5;
+				基于子查询的分页
+				SQL> select e.* from (select rownum r,emp.* from emp ) e where e.r >=5 and e.r<=10 ;
+
+				查询排序后的分页
+				SQL> select e.* from (select rownum r,ee.* from (select * from emp order by sal)ee ) e where e.r >=5 and e.r<=10;
+
+				rowid伪列
+				SQL> select rowid,emp.* from emp;
+				rowid能够标识对应的记录存储的物理位置
+
+			序列（sequence）
+				oracle中设置的一种自增长机制
+				整数，能够实现自动增长并且不会重复
+				创建从1开始每次增长1的序列
+				SQL> create sequence seq_test start with 1 increment by 1;
+				SQL> insert into emp(empno,ename) values(seq_test.nextval,'aa');
+				两个属性
+					seq_test.nextval 取出序列的下一个值
+					seq_test.currval 取出序列的当前值
+			索引（index）
+				用来快速定位查找对应记录的
+				数据库表中的字段没有所有则查询时按照FTS（Full Table Scan）查
+				以高水位线进行全表扫描
+
+				索引依靠rowid来实现快速定位一条记录
+				1.数据默认创建索引
+					表的主键，唯一键会自动创建索引
+				2.自定义索引字段
+				SQL> create index index_ename on emp(ename);
+				
+				
+				适合建立索引的情况
+				1.频繁查询的字段
+				2.经常作为查询条件的字段
+				3.数据集比较大，查询的结果小
+				4.连接查询的连接字段
+
+				不适合建立索引的情况
+				1.使用不频繁的字段
+				2.经常更新的字段
+				3.数据集大，查询的结果集也比较大
+
+				索引失效
+				1.索引字段使用函数，导致索引失效
+				2.索引字段进行运算
+				3.使用like关键字查询
+		
+			数据库常用的对象
+				table,view,index,sequence,constraint,procedure,function,package...
+			常用的数据字典
+				user_tables
+				user_views
+				user_indexes
+				user_sequences
+				user_constraints
+			
+			给账户授权
+			grant dba to scott
+
+
+
+
+

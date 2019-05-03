@@ -1,0 +1,46 @@
+数据库连接池
+	概念:其实就是一个容器，存放数据库连接的容器
+		当系统初始化后，容器被创建，容器中会申请一些连接对象，当用户来访问数据库时，从容器中获取连接对象、用户访问完之后，会将连接对象归还给容器
+		
+		好处：
+			节约资源
+			用户访问高效
+		实现
+			1,标准接口：DataSource javax.sql包下的
+				方法 获取连接 getConnection
+					归还连接 ：#### 在连接池中getConnection 中的Connection  那么它close方法，则不会关闭连接了，而是归还连接
+			2，一般我们不去实现它，有数据库厂商来实现
+				1，C3P0：数据库连接池技术
+				2，Druid：数据库连接池实现技术，有阿里巴巴提供的（最强的）（重点）
+	
+		C3P0使用步骤：
+			导入jar包：两个  C3P0-0.9.5.2.jar   mchange-commons-java-0.2.12.jar
+			定义配置文件
+					名称 c3p0.properties and  c3p0-config.xml
+					路径直接将文件放在src目录下即可
+			创建核心对象，数据库连接池对象combopooledDataSource
+				获取连接getConnection
+
+	Druid：数据库连接池实现技术
+		步骤：
+		导入包：	druid-1.0.9.jar 一个包
+		定义配置文件;
+			是Properties形式的
+			可以叫任意名称
+		获取数据库连接池对象：通过工厂类来获取 DruidDataSourceFactory    DruidDataSourceFactory.createDataSource
+			获取连接池对象 getConnection
+					
+
+
+		Spring JDBC
+		Spring框架对JDBC的简单封装。提供了一个JDBCTemplate对象简化JDBC的开发
+		步骤
+			导入jar包
+			创建JDBCTemplate对象。依赖于数据源DataSource
+				JDBCTemplate ad=new JDBCTemplate(ds);
+			调用JDBCTemplate的方法来完成CRUD操作
+			update():执行DML语句，增删改语句
+			queryForMap();查询结果，将查询结果集封装为map集合，他只能封装一条记录 
+			queryForList()：将查询的结果集 存入到Map集合中 再将map集合封装到List集合中。
+			query();将查询的结果集 封装到JavaBean中 用List集合储存   	List  li=new temp.query(sql,new BeanPropertyRowMapper<javaBean>(JavaBean.class)); 
+			queryForObject:查询结果，将结果封装为对象

@@ -1,0 +1,169 @@
+HTTP协议
+Servlet：（每次实现都要重写四个方法 但是 我们只会用service方法）
+	Servlet的体系结构
+		Servlet---接口
+			GenericServlet--实现了Servlet的一个抽象类 继承 GenericServlet 就只需要实现一个方法即可 他把其他方法实现 所以我们继承它时 就只需要实现一个方法即可 也是我们最常用的方法 service （他只抽象类这个方法）
+				httpServlet---他继承了GenericServlet 我们一般就使用这个类 --这也是个抽象类
+		
+			GenericServlet：将servlet接口中其他的方法做了默认空实现，只将service方法作为抽象类、
+				将来定义Servlet类时，可以继承GenericServlet、实现service方法即可
+			HTTPServlet：是Servlet的孙子，是对http协议的一种封装，简化操作
+				1，定义类继承HTTPServlet
+				2，复写doGet或者doPOST方法
+			servlet相关配置
+				1，urlpartten：访问路径，可以定义多个访问路径 如（@WebServlet（“/doem”“/dds”"/das"））
+				2，如果里面写的是* 号 意思就是随便写，*.das 代表前面随便写只要加上.das 也可以访问 但是*号前面不可以加/ (*是一种通配符写法)
+				3，还可以写多层路径 如（@WebServlet（“/sdas/dsa”））目录结构
+
+	HTTP：
+		概念：Hyper Text Transfer Protocol 超文本传输协议
+			传输协议：定义了，看护点和服务器通信时，发送数据的格式
+				特点
+					基于TCP/IP的高级协议
+					默认端口号是：80 		意思是 http://www.baidu.com:80
+					基于请求/响应模型：发一次请求对应一次响应
+					无状态的：每次请求之间相互独立，不能交互数据、		、	
+						
+			历史版本
+				1.0 ：当进入网页时 每个图片都会请求一次 每个资源都会请求一次 每请求一次会创建新的请求 并断开 非常消耗资源
+				1.1：连接可以复用 他不会请求一次就断开一次 它会等资源全部请求完 才会断开 （对缓冲的支持比较好）
+
+		请求消息数据格式
+			1，请求行：
+				1，请求方式，请求url 请求协议 / 版本
+			GET /long.html http/1.1
+			2，请求头：
+					请求头名称：请求头值
+				User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息
+					可以在服务器端获取该头的信息，解决浏览器的兼容性问题
+				Referer:http://localhost/login.html
+					告诉服务器，我（当前请求）从哪里来？
+					作用：
+						1，防盗链：
+						2，统计工作：
+			3，请求空行：
+					空行，就是用于分割POST请求的请求头，和请求体的
+			4，请求体：（正文）
+				封装POST请求消息的请求参数的
+		字符串
+请求头、
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 20
+Content-Type: application/x-www-form-urlencoded
+Cookie: Idea-dd3bbdc1=d630a5ac-5c75-4d25-99bc-2cc44add3aa6; JSESSIONID=1A9ACDD8DF40C62E42235AAFC2A1A4CE
+Host: localhost:8080
+Origin: http://localhost:8080
+Pragma: no-cache
+Referer: http://localhost:8080/
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+		请求体：
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 20
+Content-Type: application/x-www-form-urlencoded
+Cookie: Idea-dd3bbdc1=d630a5ac-5c75-4d25-99bc-2cc44add3aa6; JSESSIONID=1A9ACDD8DF40C62E42235AAFC2A1A4CE
+Host: localhost:8080
+Origin: http://localhost:8080
+Pragma: no-cache
+Referer: http://localhost:8080/
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+		
+		
+		响应消息数据格式
+
+## Request
+	1，request对象和response对象原理
+		request和response对象是由服务器创建的，我们来使用它们
+		request对象是来获取请求消息，response对象是来设置响应消息的
+		request对象继承体系结构
+			ServletRequest		--接口 往上看 
+				|继承
+			HTTPServletRequest	--接口 往上看
+				| 实现
+			org.apache.catalina.connector.RequestFacade 类（Tomcat）
+	2，request：获取请求消息
+	
+	3，request功能
+		1，获取请求消息数据
+			1，获取请求行数据
+				GET  /day14/dome1?name=zhangsan HTTP/1.1
+				方法：
+					1，获取请求方式：GET
+						String getMethod()
+
+					2,获取虚拟目录:/day14  (重点)
+						String getContextPath();
+
+					3,获取Servlet路径：/dome1
+						String getServletPath()
+					4,获取get方式请求参数 name=zhangsan
+
+						String getQueryString()
+					5,获取请求URI：/day14/deom1  (重点)
+						String getRequestURl()  :/day14/deom1
+							URL：统一资源定位符: http://localhost/day14/demo1
+							URI：同一资源标识符：/day14/demo1
+						StringBuffer getRequestURL(): http://localhost/day14/demo1
+
+					6，获取协议及版本 ： HTTP/1.1
+						String getProtocol()
+
+					7,获取客户机的IP地址:(谁访问你 就输出谁的IP地址  返回IPV6的IP地址)
+						String getRemoteAddr();
+
+			2.获取请求头数据 
+				方法：	
+					(重点)String getHeader(String name);通过请求头的名称获取请求头的信息  （不是表单数据 而是 一些信息 可以使用获取 【user-agent】
+
+ 							在判断 你使用的是哪个浏览器 使用 if（name.contains("Chrome")）） 看他的值是否包含Chrome 										是的话 你使用的就是谷歌浏览器  这样就可以针对一些浏览器做出不同的操作 解决兼容的问题  【referer】									String Refer=request.getHeader("referer");这里获取的是 他是从哪个网站跳转到此server的 											并获取它的路径
+
+		response.getwriter.write("往往网页上写数据 "); 不过在这语句之前 要写上 response.setContentType("text/html:charset=utf-8");
+
+					(迭代器一样)Enumeration<E> getHeaderNames()：获取所有的请求头名称
+			3，获取请求体数据
+				请求体：只有POST请求方式，才有请求体，在请求体中封装了POST请求的请求参数
+					步骤：
+						1，获取流对象
+							BUfferedReader getReader():获取字符流输入流，只能操作字符数据 （获取表单的请求数据）
+						（继承自InputSteam）ServletInputStream getInputStream();获取字节流输入流，可以操作所有类型数据
+					 
+		2，其他功能（重点）
+			1，获取请求参数通用方式（不论get还是post都能使用一下方法 ）
+				String getParameter(String name):根据参数名称获取参数值 username=zs&password=123
+				String[] getParameterValues(String name):根据参数名称获取参数值的数组， hobby=xx&hobby=ss
+				Enumeration<String> getparameterNames():获取所有请求的参数名称
+				Map<String,String[]> getParameterMap():获取所有参数的map集合
+
+	·			中文乱码问题：设置流的编码  request.setCharacterEnocding("utf-8"); 
+				get在Tomcat8之后乱码情况已解决
+				post还没有解决 会乱码
+					解决：在获取参数前，设置request的编码request.setCharacterEncoding("utf-8");
+
+			2，请求转发:一种在服务器内部的资源跳转方式
+				1，步骤
+					通过request对象获取请求转发器对象：RequestDispathcher getRequestDispathcher(String response);是下一个的访问路径
+					使用RequestDispatcher对象来进行转发： forward(ServletRequest request,ServletResponse response);
+				特点：
+					浏览器地址栏路径不发生变化
+					只能转发到当前服务器内部资源
+					准发是一次请求
+				
+			3，共享数据
+				域对象：一个有作用范围的对象，可以再范围内共享数据
+				request域；代表一次请求的范围，一般用于请求转发对个资源中共享数据
+				方法
+					void setAttribute(String name ,Object obj);储存数据
+					Object getAttritude(String name);通过键获取值
+					void removeAttribute(String name);通过键移除键值对
+
+			3，获取ServletContext
+				ServletContext getServletContext()

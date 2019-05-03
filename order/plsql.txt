@@ -1,0 +1,705 @@
+PL/SQL
+	PL(Procedure Language,过程化语言)
+	SQL(Structure Query Language,结构化查询语言)
+
+	作用：在数据库执行业务流程处理 ，减少程序与数据库的交互次数
+
+1.PL/SQL程序块
+	
+	[declare]
+		变量声明定义
+	begin
+		
+		程序块
+	[exception]
+		异常处理
+	end;
+
+	案例1：
+		控制台打印输出
+		dbms_output.put_line("内容");
+
+	begin
+		dbms_output.put_line('hello world');
+	end;
+
+	注意：在DOS窗口连接数据库，开启控制台（set serveroutput on/off）
+
+	声明定义变量
+	declare
+		v_name  varchar2(20);
+	begin
+		select ename into v_name from emp where empno=7499;
+		dbms_output.put_line(v_name);
+	end;
+
+	含有异常处理
+	declare
+		v_name  varchar2(20);
+	begin
+		select ename into v_name from emp where empno=1;
+		dbms_output.put_line(v_name);
+	exception
+		when no_data_found then
+		dbms_output.put_line('no data');
+	end;
+
+	declare
+		v_name  varchar2(20);
+	begin
+		select ename into v_name from emp;
+		dbms_output.put_line(v_name);
+	exception 
+		when too_many_rows then
+		dbms_output.put_line('too many rows');
+	end;
+	
+
+	declare
+		v_sal number(7,2);
+	begin
+		select sal into v_sal from emp where ename='&no';
+		dbms_output.put_line(v_sal);
+	exception
+		when no_data_found then 
+		dbms_output.put_line('no data');
+		when too_many_rows then
+		dbms_output.put_line('too many');
+	end;
+
+	
+	变量：
+		1.声明变量
+			变量名称  变量类型
+			v_name   varchar2(20);
+
+			变量名称不能以数字开始
+			变量名称长度不能超过30个字符
+			语句以分号结束
+			变量声明之后就可以使用（不一定要初始化）
+		2.变量赋值
+			
+			:= 赋值运算符
+			初始化变量
+			v_name varchar2(20):= 'aaa';
+			在运行中动态赋值
+			begin
+			  v_name := 'bbb';
+			  dbms_output.put_line(v_name);
+			end;
+
+			PL/SQL注释  --
+		3.变量类型
+			3.1基本类型
+				varchar2  字符串类型 
+				char      
+				number
+				date
+				boolean   布尔类型  true/false/null
+				binary_integer  整型
+
+			3.2复合类型
+				3.2.1表类型(table类型)，类似于Java程序中的数组类型
+					能够存储多个数据,可以实现存储表字段。
+
+				1.声明表类型
+				 TYPE 表类型的名称 IS TABLE OF 存储数据的类型 INDEX BY binary_integer;
+				
+				2.声明变量类型为定义的表类型
+				 --声明一个名称为table_emp_ename的table 类型
+				 type table_emp_ename is table of varchar2(20) index by binary_integer;
+				 --声明一个变量 变量类型table_emp_ename
+				 v_myName table_emp_ename;
+
+				 使用表类型，通过下标操作，下标从0开始
+				 内置函数
+					count 表类型中的数据个数
+					first 起始下标
+					last  结束下标
+					next(index) 下一个下标
+					prior(index) 上一个下标
+				
+				
+				3.2.2记录类型（record类型），能够实现数据库表中一条记录的存储
+					field(域)，类似Java中对象的属性
+				1.声明记录类型
+					type 记录类型名称 is record(域的声明);
+					type emp_record_type is record(id number(4),name varchar2(20));
+
+				2.将变量声明为记录类型
+					v_myrecord emp_record_type;
+
+				3.2.3 通过简便方式创建记录类型
+					表名%rowtype 返回记录类型
+					v_emp emp%rowtype;
+					v_emp 变量中的域会和emp中的字段一致
+
+				3.2.4 通过简便方式创建变量类型
+					表名.字段名称%type
+					v_name emp.ename%type;
+
+					v_name 变量的类型长度与emp中的ename字段一致
+
+				变量作用域
+					--变量作用域
+					 declare
+					  v_name emp.ename%type := 'test';
+					  v_sal  emp.sal%type :=10000;
+					 begin
+						 
+						  declare
+						    v_name emp.ename%type := 'hello';
+						    v_age emp.empno%type := 3;
+						  begin
+						    
+						    dbms_output.put_line(v_name);
+						    dbms_output.put_line(v_age);
+						    dbms_output.put_line(v_sal);
+						   
+						  end;
+					  dbms_output.put_line(v_name);
+					  dbms_output.put_line(v_sal);
+					  
+					 
+					 end;
+
+					 从声明位置开始 到对应的end位置结束
+
+
+		4.常数
+			--测试常量的定义
+			declare
+			  --常量必须在声明的时候初始化
+			  c_pi constant number(3,2):=3.14;
+			  
+			begin
+			  --不能给常数赋值
+			  --c_pi :=5.14;
+			  dbms_output.put_line(c_pi);
+			end;
+
+		运算符
+			1.赋值运算符
+				:= 
+			2.算术运算符
+				+ - * /   ** 求指数幂
+			3.比较运算
+				=  > < >= <= != <> ~=
+			4.逻辑运算符
+				and not or  (not null) in between and 
+		流程控制语句
+			1.if分支
+
+			if boolean条件  then
+			   分支1
+			else
+			   分支2
+			end if;
+
+			if 布尔表达式 then
+				分支1
+			elsif   布尔表达式 then
+				分支2
+			elsif   布尔表达式 then
+				分支3
+			else
+				分支4
+			end if;
+			
+			2.case分支
+
+			case 变量
+			when  常数   then
+				分支1
+			when      then
+				分支2
+			when      then
+				分支3
+			else
+				分支4
+			end case;
+			
+			3.loop循环
+
+			定义循环指数
+			loop 
+				if 循环终止条件 then
+					exit;
+				end if;
+				循环指数增长
+			end loop
+
+			4.for循环
+			定义循环指数
+
+			for 循环指数  in 开始位置..终止位置 loop
+
+			end loop;
+			
+			逆序循环 
+				开始位置<终止位置
+
+			定义循环指数
+
+			for 循环指数  in reverse 开始位置..终止位置 loop
+
+			end loop;
+
+			5.while循环
+			定义循环指数
+
+			while  终止条件 loop
+				循环体;
+			循环指数自增；
+			end loop;
+
+	PL/SQL程序块中执行SQL语句 
+		1.执行DQL
+			1.执行查询语句只能返回一个结果
+				没找到数据，则抛出no_data_found
+				返回多个结果，则抛出too_many_rows
+			2.语句中必须含有into关键字赋值
+			--执行DQL
+			declare
+			   v_name emp.ename%type;
+			begin
+			   select ename into  v_name from emp where empno=7788;
+			    dbms_output.put_line(v_name);
+			exception
+			   when too_many_rows then
+				dbms_output.put_line('too');
+			   when no_data_found then
+				dbms_output.put_line('no');
+			end;
+		2.执行DML
+			注意：执行DML要注意事务的处理
+
+			在执行DML之后,事务提交之前 可以通过sql%rowcount 来接收DML语句的影响记录条数
+		
+		3.执行DDL
+			DDL的执行必须在 execute immediate(DDL);
+		
+		4.使用goto关键字
+			declare
+			       v_index binary_integer :=1;
+			       
+			begin
+			       loop 
+				    if v_index = 10 then
+				    exit;
+				    end if;
+				    
+				    if v_index=5 then
+				    --执行 goto语句
+				       goto  test;
+				    end if;
+				    
+				    dbms_output.put_line(v_index);   
+				    v_index := v_index+1;
+			       end  loop;
+
+			       --标签
+			       <<test>>
+			       dbms_output.put_line('test goto');
+
+			end;
+
+			标签<<名称>> 标识一段程序
+
+
+	
+	游标（cursor）
+		游标类似指针，指向当前上下文环境（context,一块内存区域）
+		context上下文环境：
+			存储了PLSQL需要执行的SQL语句，
+			语句之后完之后的返回结果
+		
+		游标属性
+			游标名称%rowcount  返回当前操作的记录数
+			游标名称%found     返回判断当前游标是否有下一个值 true/false
+			游标名称%notfound  返回判断当前游标是否有下一个值 true/false
+			游标名称%isopen    返回布尔类型值，判断当前游标是否开启
+
+		游标的分类：
+			隐式游标：由DBMS声明管理操作，程序员能够获取隐式游标的属性值
+				在执行DML操作时默认DBMS开启名称为sql的游标
+			
+			显示游标：由程序员声明创建开启关闭等。
+
+			使用显示游标步骤：
+				1.声明游标
+				 cursor 名称 is 游标内容（SQL）
+				2.开启游标
+				 open 游标名称
+				3.获取数据
+				 fetch  游标名称 into 变量
+				4.关闭游标
+				 close 游标名称
+			
+				含有参数的游标
+				声明游标时设置形参，在开启游标时设置实参
+				--带参数的游标
+				declare
+				       --1.定义游标
+				       cursor my_cursor(id number) is select ename from emp where empno=id;
+				       v_name emp.ename%type;
+				begin
+				      --2.开启游标,在启动游标时传递实参
+				      --open my_cursor(7788);
+				      open my_cursor(&no);
+				      --3.循环获取值
+				      loop
+					   fetch my_cursor into v_name;
+					   if my_cursor%notfound then
+						exit;
+					   end if;
+					   dbms_output.put_line(v_name);
+				      end loop; 
+				      
+				      --4.关闭游标
+				      close my_cursor;
+				end;
+
+
+				定义游标类型
+				1.定义声明游标类型
+				type  类型名称 is  ref cursor return 返回类型
+				
+				 --声明游标类型
+				 type cursor_type is  ref cursor return emp%rowtype;
+
+				2.声明变量为游标类型
+				      --声明变量为游标类型
+				      my_cursor cursor_type;
+
+				使用游标类型能够更灵活的绑定SQL，实现动态绑定SQL语句
+
+
+				for循环游标 
+				
+				--for循环游标
+				declare
+				       --1.定义游标
+				       cursor my_cursor is select ename from emp;
+				       v_cursor emp.ename%type;
+				      
+				begin
+				     --循环游标时不要开启关闭以及获取值
+				     for v_cursor in my_cursor  loop
+				     
+					 dbms_output.put_line(v_cursor.ename);
+					 
+				     end loop;
+				end;
+
+	
+	过程（Procedure）
+		过程，也叫存储过程（Store Procedure,sp）
+		是用来实现某种特定功能的，存储在数据库系统中的程序块
+		类似与Java中的方法
+		PLSQL程序块是瞬时的，不能永久的存储在数据库系统中
+
+		定义声明过程
+		--创建过程、如果已经存在则替换存在的过程
+		create or replace procedure 过程名称(参数)
+		--不能省略is|as
+		is|as  
+			声明定义变量
+		begin
+			过程体
+		end;
+
+		1.定义含有输入参数的过程
+		create or replace procedure mypro_test(p_id  number)
+		as
+		       v_sal emp.sal%type;
+		begin
+		       select sal into v_sal from emp where empno=p_id;
+		       dbms_output.put_line(v_sal);
+		end;
+
+		调用含有输入参数的过程
+			1.1命令行调用
+				execute/exec 过程名称(参数);
+				SQL> execute mypro_test(7788);
+			1.2PLSQL块调用
+				--plsql执行
+				begin
+				       mypro_test(7788);
+				end;
+			1.3JDBC调用
+		2.含有输入输出参数的过程
+		--含有输入输出参数的过程
+		create  or replace procedure mypro_inout(p_id in number,p_sal out number)
+		is
+		begin
+			select sal into p_sal from  emp where empno=p_id;
+		end; 
+		
+		调用含有输出参数的过程
+			2.1命令行 
+			var 参数名称 参数类型
+			exec 过程名称（输入参数，:输出参数）
+			SQL> var v_sal number;
+			SQL> exec mypro_inout(7788,:v_sal);
+
+			2.2程序块中调用
+			--plsql执行
+			declare
+			       v_sal emp.sal%type; 
+			begin
+			       mypro_inout(7788,v_sal); 
+			       dbms_output.put_line('sal='||v_sal);
+			end;
+
+		3.无参的过程
+			--无参的过程
+			create  or replace procedure mypro_noparam
+			is 
+				v_sal emp.sal%type;
+			begin
+				select sal into v_sal from emp where empno=7788;
+				dbms_output.put_line(v_sal);
+			end; 
+
+			调用
+			   --执行
+				begin
+					--括号可省略
+					mypro_noparam();
+				end;
+
+		
+	函数（Function）
+		Oracle数据库中的对象能够永久的存储在数据库中
+		类似于Java中的方法
+		函数更注重计算，返回结果
+		Oracle内置的函数
+		upper()/max()/min()/count()/substr(,,)
+		
+		自定义函数
+		
+		create or replace function 函数名称(参数)
+		return 返回值的类型
+		is
+			变量声明定义
+		begin
+			函数体
+			return 返回值;
+		end;
+
+		定义含有输出参数的函数
+		create or replace function 函数名(参数名 in/out 参数类型)
+		return 返回类型
+		is
+		begin
+			return 返回值;
+		end;
+	
+		
+	函数（Function）              过程（Procedure）
+	注重计算			业务逻辑的处理
+	in|out|return			in|out
+	必须含有return			不必使用return返回
+	必须声明返回类型		不用声明
+	不能单独调用，			可以单独调用 
+	必须包含在SQL中或者PLSQL块中
+
+
+
+	包（Package）
+		区分和管理过程和函数以及其他对象
+
+		包含有两部分：包头和包体
+		声明包头：包头只能含有过程或者函数等的声明，不能含有实现
+		create or replace package 包名
+		is
+			内容
+		end;
+
+		声明包体：包体是对应包头的具体实现
+		create or replace package body 包名
+		is 
+			具体内容实现
+		end;
+
+		注意：一定要有包头，包头主要用来定义声明过程，函数，变量，类型，常量等
+		      包体负责包头的具体实现
+		      包体负责具体实现的封装
+		      可以单独定义包头，此种包头中只能声明常量。
+		      create or replace package my_constant 
+		      is
+			       c_pi constant number := 3.14;
+		      end;
+	
+	JDBC调用函数和过程
+		调用过程
+			1.无参的过程
+			//无参的过程调用
+			String sql = "{call 过程名称()}";
+			//调用过程，通过连接对象创建一个CallableStatement对象
+			CallableStatement stmt = conn.prepareCall(sql);
+			//执行过程
+			stmt.execute();
+
+			2.含有输入参数的过程,通过？占位符，动态传参
+				占位符下标从1开始
+
+			
+			String sql = "{call 过程名称(?,?)}";
+			//调用过程，通过连接对象创建一个CallableStatement对象
+			CallableStatement stmt = conn.prepareCall(sql);
+			//动态设置参数，根据类型调用具体的set方法
+			stmt.setXXX(下标,参数);
+			stmt.setXXX(下标,参数);
+
+			//执行过程
+			stmt.execute();
+
+			3.含有输出参数的过程
+			//第一个为输入参数，第二个为输出参数
+			String sql = "{call 过程名称(?,?)}";
+			//调用过程，通过连接对象创建一个CallableStatement对象
+			CallableStatement stmt = conn.prepareCall(sql);
+			//动态设置参数，根据类型调用具体的set方法
+			stmt.setXXX(下标,参数);
+			stmt.registerOutParameter(下标,输出参数类型);
+				java.sql.Types.类型
+				oracle.jdbc.internal.OracleTypes.类型
+
+
+			//执行过程
+			stmt.execute();
+			//接收输出参数
+			stmt.getXXX(输出参数的位置下标)
+
+		调用函数 
+			//调用自定义函数 
+			String sql = "select my_package_emp.emp_sum(10) from dual";
+			Class.forName(driver);
+			Connection conn = DriverManager.getConnection(url, user, password);
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				System.out.println(rs.getInt(1));
+			}
+
+		
+		
+		
+		定义一个包，包中含有一个过程
+		过程功能
+			根据员工编号，查询员工工资等级
+			emp(...)
+			salgrade(...)
+			grade(grade,level)
+			1       c
+			2	c
+			3	c
+			4	a
+			5	a
+	
+	异常（exception）
+		系统异常
+			预定义异常：由DBMS声明的含有异常名称，异常编码，异常信息的异常
+			no_data_found
+			too_many_rows
+			zero_divid
+
+			21个
+
+			非预定义异常：由DBMS声明抛出，是一类含有异常编码，异常信息，没有异常名称
+				由程序人员定义一个异常名称，绑定到对应的异常编码
+				便于捕获处理异常
+				
+				处理非预定义异常
+				  1.绑定异常名称
+				       --声明异常名称
+				       异常名称 exception;
+				       e_hasChild exception;
+				       
+				       --将异常名称和异常编码绑定
+				       pragma exception_init(异常名称,异常编码);
+				       pragma exception_init(e_hasChild,-02292);
+				  2.在exception模块中处理
+					when 被绑定的异常名称 then
+						处理代码
+					when e_hasChild then
+						dbms_output.put_line('编码'||p_id||'存在子记录');
+
+		
+		用户自定义异常
+			由程序人员来声明抛出，由程序人员来声明异常的编码，异常信息以及异常名称
+			这种异常一般都是跟具体业务逻辑相关的。
+			自定义异常编码：编码的取值-20999~~~-20000
+			--用户自定义异常
+			create or  replace procedure test_exception_login(p_name varchar2,p_pwd varchar2)
+			is
+			       v_pwd varchar2(20);
+			       --定义异常名称
+			       e_passwordError exception;
+			       --绑定异常名称和编码
+			       pragma exception_init(e_passwordError,-20001);
+			begin
+			       select password into v_pwd from t_user where username = p_name;
+			       if v_pwd = p_pwd then
+				  dbms_output.put_line('ok');
+			       else 
+				  --手动抛出密码错误异常
+				  --dbms_output.put_line('ok');
+				  --dbms_standard.raise_application_error(-20001,'密码错误');
+				  raise_application_error(-20001,'密码错误');
+			       end if;
+			exception
+			       
+			       when no_data_found then
+				    dbms_output.put_line('用户名不存在');
+			       when e_passwordError then
+				    dbms_output.put_line('密码不正确');
+			       when others then
+				    dbms_output.put_line('error');
+			end;
+
+	
+	触发器（Trigger）
+		类似Java中的监听器
+		监听特定事件的发生，事件发生马上触发对应的触发器，执行操作
+		表级别的触发器
+
+		create or replace trigger 触发器名称
+		before/after 操作 on 表名称
+		begin
+			
+		end;
+		
+		行级别的触发器
+		create or replace trigger 触发器名称
+		before/after 操作 on 表名称 for  each
+		begin	
+		end;
+
+		判断触发器执行的DML触发事件
+			函数
+			dbms_standard.inserting 返回值为true 表示执行insert
+			dbms_standard.updating  返回值为true 表示执行update
+			dbms_standard.deleting  返回值为true 表示执行delete
+		
+		获取触发器执行前后字段的值
+			:old.字段名称  获取字段更改前的值
+			:new.字段名称  获得字段更改后的值
+		
+		触发器的执行顺序
+			表级别的和行级别的触发器同时存在
+			1.表级别的before触发器
+			2.行级别的before触发器
+			3.行级别的after触发器
+			4.表级别的after触发器
+		
+
+		注意：触发器不传参，没有返回值，不做事务处理。
+
+
+
+

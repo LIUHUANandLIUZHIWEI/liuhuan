@@ -1,0 +1,147 @@
+XML：
+	概念：Extensible markup Language 可扩展标记语言（可跨平台） (xml可以被浏览器解析)
+	1，可扩展：xml标签全都是自定义的。比如 <user><student> 可以随意写标签
+	2，功能：
+		储存数据
+			1，配置文件 
+			2，网络中传输
+	3，XML与HTMl区别（他们是亲兄弟）都是w3c出品
+		1，XML标签都是自定义的，HTML标签是预定义的
+		2，xml的语法严格，HTML语法松散
+		3，xml是储存数据的，HTML是展示数据的
+		规定语法：
+			第一行	<?xml? version='1.0'> 必须是第一行 空格也不行
+	4，语法
+		基本语法：
+			1，xml后缀名 .xml
+			2，xml第一行必须定义文档声明
+			3，xml文档中有且仅有一个根标签
+			4，属性值必须使用引号（单引双引都可以）引起来
+			5，标签必须正确关闭
+			6，xml标签名称区分大小写
+		快速入门：
+			<?xml? version='1.0'>
+			<users>
+				<user id="1">
+					<name>zhangsan</name>
+					<age>23</age>
+					<gender>male</gender>
+				<user>
+				<user id="2">
+					<name>lisi</name>
+					<age>23</age>
+					<gender>male</gender>
+				<user>
+			</users>
+		组成部分：
+			1，文档声明
+				1，格式 ： <?xml  属性列表?>
+				2，属性列表：
+					version：版本号必须的属性 1.0
+					encoding :编码方式。	告知解析引擎当前文档使用的字符集，默认值是ISO-8859-1
+					standalone：是否独立 取值 yes不依赖其他文件   no依赖其他文件
+			2，指令（了解）：结合css的
+				<?xml-stylesheet type="text/css" href="css/a.css"?>
+			3，标签:标签名自定义的
+				规则：名称可以包含字母、数字以及其他字符
+					名称不能以数字或标点符号开始
+					名称不能以字母xml（或者 XML /Xml 等等）开始
+					名称不能包含空格 
+			4，属性；键值对构成
+				id值唯一
+			5，文本	（很多字符需要使用 HTML中一样进行专业 如& 是&amp;）
+				1,CDATA区；在这里就不需要转义 直接原样输出 要放在<![CDATA[  需要展示的数据 ]]>
+	
+w3c：万维网联盟
+
+
+		约束：规定xml文档饿书写规制
+			作为框架的使用者（程序员）
+			1，能够在xml中引用约束文档
+			2，能够简单的读懂约束文档
+		
+			分类
+			1，DTD：简单的约束技术
+			2，Schema：一种复杂的约束技术
+
+
+			DTD：
+				引入dtd文档到xml文档中
+					内部dtd：将约束规则定义在xml文档中
+					外部dtd：将约束的规则定义在外部的dtd文件中
+						本地：<!DOCTYPE 根标签名 SYSEM "dtd文件的位置">
+						网络：<!DOCTYPE 根标签名 PUBLIC "dtd文件名" "dtd文件的位置URl">
+			Schema：
+				引入：
+					1，填写xml文档的根元素
+					2，引入xsi前缀. xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					3，引入xsd文件命名空间. xsi:schemaLocation="http://www.itcast.cn/xml student.xsd"
+					4,为每一个xsd约束声明一个前缀，作为标识 xmlns="http://www.itcast.cn/xml"
+
+				<students xmls:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xmlns="http://www.itcast.cn/xml"
+					xsi:schemaLocation="http://www.itcast.cn/xml student.xsd">
+	解析：操作xml文档，将文档中的数据读取到内存中
+		操作xml文档
+			1，解析（读取）：将文档中的数据读取到内存中
+			2，写入：将内存中的数据保存到xml文档中。持久化的储存
+		解析xml的方式：（面试题）
+			1，DOM将标记语言文档一次性加载进内存，在内存中形成一颗DOM树
+				优点：操作方便，可以对文档进行CRUD的所有操作
+				缺点：占内存
+			2.SAX：逐行读取，基于事件驱动的
+				优点：不占内存。
+				缺点：只能读取，不能删改
+
+		xml常见的解析器：
+			1，JAXP：sun公司提供的解析器，支持DOM和sax两种思想
+			2，DOM4J：一款 非常优秀的解析器
+			3，Jsoup：Jsoup是一款Java的HTML解析器，可直接解析某个URL地址、HTML文本内容。他提供了一套非常省力的API、可通过DOM、CSS以及类似于JQuery的操作来取出和操作数据。
+			4，PULL：Android操作系统内置解析器、sax方式的。
+
+
+		（我们用Jsoup）
+		3，Jsoup：Jsoup是一款Java的HTML解析器，可直接解析某个URL地址、HTML文本内容。他提供了一套非常省力的API、可通过DOM、CSS以及类似于JQuery的操作来取出和操作数据。
+		快速入门：
+			步骤：
+			1，导入jar包Jsoup-1.11.2.jar包
+			2，获取Document对象
+			3，获取对应的标签 Element对象
+			4，获取数据
+
+
+		对象的使用
+			Jsoup：工具类，可以解析HTML或xml文档，返回Document
+				parse方法：解析忽然没了或xml文档、返回Document
+				parse（File in，String charsetName）:解析xml或HTML文件的
+				parse(String html):解析xml或HTML字符串
+				parse(URL url,int timeoutMillis):通过网络路径获取指定的HTML或xml的文档对象  URl是同一资源定位符
+			Document文档对象。代表内存中的DOM树
+				获取Element对象
+					getElementById（String id）：根据id属性获取唯一的element对象
+					getElementsByTag（String tagName）：根据标签名称获取元素对象集合
+					getElementsByAttribute（String key）：根据属性名称获取元素对象集合 
+					getElementsByAttributeValue(String key,String value):根据对应的属性名和属性值获取元素对象集合
+			Elements：元素Element对象的集合。可以当做ArrayList<Element>来使用  可以用for循环 来获取每个对象
+			Element：元素对象 
+				获取Element子元素对象
+					getElementById（String id）：根据id属性获取唯一的element对象
+					getElementsByTag（String tagName）：根据标签名称获取元素对象集合
+					getElementsByAttribute（String key）：根据属性名称获取元素对象集合 
+					getElementsByAttributeValue(String key,String value):根据对应的属性名和属性值获取元素对象集合
+				获取属性值
+					attr（String key）:根据属性名称获取属性值
+				获取文本内容
+				String text(）：获取文本内容，和所有子标签的内容（只有内容没有标签）
+				String html() : 获取标签体下的所有内容 包括子标签中的内容（包括标签）
+			Node：节点对象
+				是Document和Element的父类
+					
+
+		快捷的查询方式
+			1，selector：选择器
+				使用方法：Elements select(String cssQuery)：
+					语法：参考Selector类中定义的语法
+			2，XPath：XPath即为XML路径语言，它是一种用来确定XMl（标准通用标记语言的子集）文档中某位置的语言
+				使用Jsoup的XPath需要额外导入jar包。
+				查询w3cshool参考手册，使用下退货的语法完成查询

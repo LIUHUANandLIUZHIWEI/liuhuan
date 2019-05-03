@@ -1,0 +1,2 @@
+confirm("s");弹出 一个确认信息 点确定是true 否则就为false
+document.getElementById("表单id").submit(); 可以提交表单

@@ -1,0 +1,95 @@
+##Servlet
+	Servlet体系结构
+		Servlet（接口） ---》GenericServlet（抽象类）---》HTTPServlet（抽象类）
+			GenericServlet：将servlet接口中的其他方法做了某人实现，只将service（）方法作为抽象类
+					将来定义servlet类时，可以继承GenericServlet，只要重写Service方法即可
+					获取请求方法 String str=req.getMethod(); 每种请求方式 有不同的处理方式
+			HttpServlet：对http协议的一种封装，简化操作
+				使用方法 定义类继承HTTPServlet 重写 doget  和 dopost
+			配置 @WebServlet（"/"）/ 代表缺省配置 和/* 一样 在没有其他的配置以后 才会配置它
+
+
+##HTTP协议（重点）
+	概念：Hyper Text Transfer Protovol 超文本传输协议
+		传输协议：定义了，客户端和服务端通信时，发送数据的格式
+			特点：
+				基于TCP/IP的高级协议	面向连接的安全协议， 建立安全连接
+				默认端口号：80
+					http://www.baidu.cn:80
+				基于请求/响应模型的：一次请求对应一次响应
+				无状态：每次请求之间相互独立，不能交互数据
+			历史版本：
+				1.0；每次请求都会断开连接
+				1.1；当没有数据在请求 才会断开连接（连接复用）
+
+		 	User-Agent：获取浏览器的版本信息，用于浏览器兼容的问题 使用request.getHeader(User-Agent)获取
+			Referer:就是发送请求的来源  防盗链问题和统计12:23 2019/3/13   使用request.getHeader（"Referer"）获取
+
+##request对象
+
+	request对象和response对象原理
+		request和response对象是由服务器创建的，我们来使用
+		request对象对来获取请求消息，response对象是来设置响应消息
+	request继承体系结构
+		ServletRequest（接口）---》HttpServletRequest（接口）----》org.apache.catalina.connector.RequestFacade类（Tomcat）
+		
+		request功能
+			获取请求消息数据
+				获取请求行数据
+					string getMethod() 获取GET and POST
+					String getContextPath(） 获取虚拟目录
+					String getServletPath() 获取servlet路径
+					String  getQueryString() 获取请求参数
+					String  getRequestURl() 获取资源路径
+					String getRequestURI（） 获取完整路径
+					String  getProtocol() 获取协议及版本信息
+					String getRemoteAddre() 获取客户机的IP地址
+			获取请求头数据
+				String getHeader（String name）；通过请求头的名称获取请求头的值
+				Enumeartion<T> getHeaderName();获取所有头信息
+			获取请求体数据
+				只有POST请求方式才有请求体
+					获取流对象
+						BufferedReader  getReader() 获取字符输入流，只能操作字符
+						ServletInputStream getInputStream();获取字节流对象   servletInputStream继承了InputStream
+
+				其他方法
+					获取请求参数通用方式
+						String getParameter（String name ）根据参数名称获取参数值
+						String[] getParameterValues(String name)根据参数名称获取参数的数组
+						Enumeration<String> getParameterNames();获取所有请求参数
+						Map<String,String[]> getParaeterMap()获取所有参数的map集合
+				中文乱码问题：
+					解决方法：request.setCharacterEncoding("utf-8");
+		get 乱码问题 TomCat7  浏览器以UTF-8进行编码  Tomcat会以ISO-8859-1解码
+								把它再以ISO-8859-1形式转为二进制    在由二进制转为UTF-8编码
+			解决方案 String name=new String (request.getParameter(name).getBytes("ISO-8859-1"),"utf-8")
+					
+			
+					请求转发：一种在服务器内部跳转的方式								转发路径
+						通过request对象获取请求转发器对象RequestDispatcher res= request.getRequestDispatcher(String path)返回转发器
+												res.forward(request,response);再用转发器转发请求和响应
+					特点：
+						浏览器地址栏路径没有发生变化
+						不能访问外部地址 只能转发到当前服务器内部资源中
+						转发只有一次请求 内部资源跳转
+						
+					
+					共享数据
+						域对象：一个有作用范围的对象，可以在范围内共享数据
+							request域范围：代表一次请求的范围，一般用于请求转发的多个资源中共享数据
+						方法：
+							request.setAttribute("数据名",数据或对象),储存数据
+							request.getAttribute("数据名")；通过数据名获取数据或对象
+							request.removeAttribute("数据名")通过数据名删除此共享数据
+
+				域对象概念：在一定范围内共享数据的对象叫域对象
+			
+
+					获取ServletContext
+						request.getServletContext();
+
+					再从流对象之中拿数据
+				获取请求头数据
+				获取请求体数据
+		

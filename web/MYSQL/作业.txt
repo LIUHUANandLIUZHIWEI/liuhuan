@@ -1,0 +1,224 @@
+create table student
+(
+sno varchar(20) not null primary key,
+sname varchar(20) not null,
+ssex varchar(20) not null,
+sbirthday datetime,
+class varchar(20)
+);
+insert into student values('108','曾华','男','1977-09-01','95033');
+insert into student values('105','匡明','男','1975-10-02','95031');
+insert into student values('107','王丽','女','1976-01-23','95033');
+insert into student values('101','李军','男','1976-02-20','95033');
+insert into student values('109','王芳','女','1975-02-10','95031');
+insert into student values('103','陆君','男','1974-06-03','95031');
+
+create table teacher
+(
+tno varchar(20) not null primary key,
+tname varchar(20) not null,
+tsex varchar(20) not null,
+tbirthday datetime,
+prof varchar(20),
+depart varchar(20) not null
+
+);
+insert into teacher values('804','李诚','男','1958-12-02','副教授','计算机系');
+insert into teacher values('856','张旭','男','1969-03-12','讲师','电子工程系');
+insert into teacher values('825','王萍','女','1972-05-05','助教','计算机系');
+insert into teacher values('831','刘冰','女','1977-08-14','助教','电子工程系');
+
+
+create table course
+(
+cno varchar(20) not null primary key,
+cname varchar(20) not null,
+tno varchar(20) not null,
+foreign key(tno) references teacher(tno)
+
+);
+insert into course values('3-105','计算机导论','825');
+insert into course values('3-245','操作系统','804');
+insert into course values('6-166','数字电路','856');
+insert into course values('9-888','高等数学','831');
+
+
+create table score
+(
+sno varchar(20) not null primary key,
+foreign key(sno) references student(sno),
+cno varchar(20) not null,
+foreign key(cno) references course(cno),
+degree decimal
+
+);
+insert into score values('103','3-245','86');
+insert into score values('105','3-245','75');
+insert into score values('109','3-245','68');
+insert into score values('101','3-105','92');
+insert into score values('107','3-105','88');
+insert into score values('108','3-105','76');
+
+insert into score values('109','3-105','64');
+insert into score values('104','3-105','91');
+insert into score values('100','3-105','78');
+insert into score values('102','6-166','85');
+insert into score values('104','6-166','79');
+insert into score values('109','6-166','81');
+select * from score
+
+1、 查询Student表中的所有记录的Sname、Ssex和Class列。
+select sname,ssex,class from student
+2、 查询教师所有的单位即不重复的Depart列。
+SELECT distinct Depart from teacher
+3、 查询Student表的所有记录。
+select * from student
+4、 查询Score表中成绩在60到80之间的所有记录。
+select * from score where degree BETWEEN 60 and 80
+5、 查询Score表中成绩为85，86或88的记录。
+select * from score where degree in(85,86,88)
+6、 查询Student表中“95031”班或性别为“女”的同学记录。
+select * from student where class='95031' or ssex='女'
+7、 以Class降序查询Student表的所有记录。
+select * from student ORDER BY class desc
+8、 以Cno升序、Degree降序查询Score表的所有记录。
+select * from score ORDER BY cno asc,degree desc
+9、 查询“95031”班的学生人数。
+select count(*) from student where class='95031'
+10、     查询Score表中的最高分的学生学号和课程号。（子查询或者排序）
+select sno,cno from score where degree=(select max(degree) from score)
+--方式二
+SELECT sno,cno from score ORDER BY degree desc limit 1
+11、     查询每门课的平均成绩。
+select cno,avg(degree) from score GROUP BY cno
+12、     查询Score表中至少有5名学生选修的并以3开头的课程的平均分数。
+select avg(degree) from score where cno like '3%' and cno in(
+select cno from score group by cno having count(*)>=5)
+--方式二：
+select avg(degree) from score where cno like '3%'  group by cno having count(*)>=5
+13、     查询分数大于70，小于90的Sno列。
+select sno from score where degree>70 and degree<90
+14、     查询所有学生的Sname、Cno和Degree列。
+select sname,cno,degree from score,student where score.sno=student.sno
+15、     查询所有学生的Sno、Cname和Degree列。
+select sno,cname,degree from score s,course c where s.cno=c.cno
+16、     查询所有学生的Sname、Cname和Degree列。
+select sname,degree from student s,course c,score sc where s.sno=sc.sno and c.cno=sc.cno
+--使用join....on方式
+select sname,cname,degree from student s join score  sc on s.sno=sc.sno join course c on sc.cno=c.cno
+17、     查询“95033”班学生的平均分。
+select avg(degree) as avgdegree from score where sno in(select sno from student where class='95033')
+18、 假设使用如下命令建立了一个grade表：
+drop table grade
+create table grade(low int(3),upp int(3),rank char(1))
+insert into grade values(90,100,'A');
+insert into grade values(80,89,'B');
+insert into grade values(70,79,'C');
+insert into grade values(60,69,'D');
+insert into grade values(0,59,'E');
+select * from grade
+SELECT * from score
+现查询所有同学的Sno、Cno和rank列。
+select score.sno,score.cno,grade.rank  from score,grade where score.degree BETWEEN grade.low and grade.upp
+19、查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录。
+select * from score where cno='3-105' and degree>(
+select max(degree) from score where sno='109' and cno='3-105'
+)
+21、查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录。
+select * from score where degree>(
+select degree from score where sno='109' and cno='3-105'
+)
+22、查询和学号为108、101的同学同年出生的所有学生的Sno、Sname和Sbirthday列。
+select sno,sname,sbirthday from student where year(sbirthday)=(
+select year(sbirthday) from student where sno='108'
+)
+23、查询“张旭“教师任课的学生成绩。
+select sno,degree from score s,course c where s.cno=c.cno and c.tno=(
+select tno from teacher where tname='张旭'
+)
+--方式二
+select degree from score where cno in(
+select cno from course where tno=(
+select tno from teacher where tname='张旭'
+)
+)
+24、查询选修某课程的同学人数多于5人的教师姓名。
+select tname from teacher t,course c where t.tno=c.tno and c.cno=(
+select cno from score GROUP BY cno HAVING count(*)>5
+)
+--方式二
+select tname from teacher where tno=(
+select tno from course where cno=(
+select cno from score GROUP BY cno HAVING count(*)>5
+)
+)
+25、查询95033班和95031班全体学生的记录。
+select * from student where class in('95033','95031')
+26、  查询存在有85分以上成绩的课程Cno.
+select cno from score where degree>85
+27、查询出“计算机系“教师所教课程的成绩表。
+select * from course where cno in(select cno from course where tno in(
+select tno from teacher where depart='计算机系'
+))
+28、查询“计算 机系”与“电子工程系“不同职称的教师的Tname和Prof。
+select tname,prof from teacher where depart='计算机系' and prof not in(
+select prof from teacher where depart='电子工程系'
+)
+29、查询选修编号为“3-105“课程且成绩至少高于选修编号为“3-245”的同学的Cno、Sno和Degree,并按Degree从高到低次序排序。
+any:代表括号中任意一个成绩就可以
+select cno,sno,degree from score where cno='3-105' and degree>any(
+select degree from score where cno='3-245'
+)ORDER BY degree desc
+30、查询选修编号为“3-105”且成绩高于选修编号为“3-245”课程的同学的Cno、Sno和Degree.
+all:代表括号中的所有成绩
+select cno,sno,degree from score where cno='3-105' and degree>all(
+select degree from score where cno='3-245'
+)ORDER BY degree desc
+31、 查询所有教师和同学的name、sex和birthday.
+select tname,tsex,tbirthday from teacher union select sname,ssex,sbirthday from student
+32、查询所有“女”教师和“女”同学的name、sex和birthday.
+select tname,tsex,tbirthday from teacher where tsex='女' union select sname,ssex,sbirthday from student where ssex='女'
+33、 查询成绩比该课程平均成绩低的同学的成绩表。
+select * from score a where degree<(select avg(degree) from score b where b.cno=a.cno)
+34、 查询所有任课教师的Tname和Depart.
+select tname,depart from teacher where tno in(
+select tno from course
+)
+35 、 查询所有未讲课的教师的Tname和Depart.
+select tname,depart from teacher where tno not in(
+select tno from course where cno in(
+select cno from score
+)
+)
+36、查询至少有2名男生的班号。
+select class from student where ssex='男' GROUP BY class HAVING count(*)>1
+37、查询Student表中不姓“王”的同学记录。
+select * from student where sname not like '王%%'
+38、查询Student表中每个学生的姓名和年龄。
+select sname,year(NOW())-year(sbirthday) from student
+39、查询Student表中最大和最小的Sbirthday日期值。
+select max(sbirthday),min(sbirthday) from student
+40、以班号和年龄从大到小的顺序查询Student表中的全部记录。
+select * from student ORDER BY class desc,sbirthday desc
+41、查询“男”教师及其所上的课程。
+select tname,cname from course c,teacher t where c.tno=t.tno and t.tsex='男'
+42、查询最高分同学的Sno、Cno和Degree列。
+select sno,cno,degree from score where degree=(
+select max(degree) from score
+)
+--排序写法
+select sno,cno,degree from score ORDER BY degree desc limit 1
+43、查询和“李军”同性别的所有同学的Sname.
+select sname from student where ssex=(
+select ssex from student where sname='李军'
+)
+44、查询和“李军”同性别并同班的同学Sname.
+select sname from student where ssex=(
+select ssex from student where sname='李军'
+) and class=(
+select class from student where sname='李军'
+)
+45、查询所有选修“计算机导论”课程的“男”同学的成绩表。
+select sno,cno,degree from score where cno=(
+select cno from course where cname='计算机导论'
+)and sno in(select sno from student where ssex='男')

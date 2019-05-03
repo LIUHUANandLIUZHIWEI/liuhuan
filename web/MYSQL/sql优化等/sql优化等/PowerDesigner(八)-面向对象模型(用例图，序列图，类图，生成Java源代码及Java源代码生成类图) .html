@@ -1,0 +1,1336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0064)http://blog.csdn.net/conviction_thinking/article/details/7959270 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+            <link rel="canonical" href="http://blog.csdn.net/conviction_thinking/article/details/7959270"> 
+
+   
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/conviction_thinking/article/details/7959270#">
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) - conviction_thinking的专栏
+        - CSDN博客</title>
+    
+    <meta name="description" content="面向对象模型  面向对象模型是利用UML(统一建模语言)的图形来描述系统结构的模型，它从不同角度实现系统的工作状态。这些图形有助于用户，管理人员，系统分析人员，开发人员，测试人员和其他人员之间进行信息交流。这里主要介绍用例图，序列图和类图。  1.面向对象模型OOM    面向对象模型是利用UML的图形描述系统结构的模型，可以利用PowerDesigner的面向对象模型进行创建。Pow">
+
+    <meta name="keywords" content="properties,uml,图形">
+
+   
+    <script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/hm.js"></script><script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+       
+       
+        <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/style.css">
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/conviction_thinking/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/default.css">
+ 
+
+
+
+    <link href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet">
+     
+         <link rel="stylesheet" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/csdn_blog_detail.min.css">
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/ds.js"></script>
+
+<script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/share.js"></script><script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/wxLogin.js"></script><link type="text/css" rel="stylesheet" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/style(1).css"><link rel="stylesheet" type="text/css" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/style(2).css"><script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/logger.js"></script><link href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/bdsstyle.css" rel="stylesheet" type="text/css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/share_style0_16.css"></head><style type="text/css" id="136017201053"></style>
+
+
+<body><div id="MathJax_Message" style="display: none;"></div><iframe frameborder="0" style="display: none;" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/saved_resource.html"></iframe><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" id="toolbar_search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label"><span class="red_txt">*</span>标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group" style="display:none;">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">位置</label>                        <div class="col-sm-10">                          <div class="my_lib_box">                            个人主页&nbsp;-&nbsp;<a href="http://my.csdn.net/" target="_blank">我的知识</a>                          </div>                          <div class="checkbox">                            <div class="pull-left">                              <label>                                <input type="checkbox" name="share" class="save_lib_map" checked="checked">同时保存至：                              </label>                            </div>                            <div class="pull-left">                              <div class="dropdown">                                <button id="toolbar_sele_map" type="button">                                  选择知识图谱                                  <i class="fa fa-chevron-down"></i>                                </button>                                <div class="top_arr"></div>                                <div class="outside">                                  <ul class="dropdown-menu" id="toolbar_Design_knowledge"><li>选择知识图谱</li></ul>                                </div>                              </div>                            </div>                            <div class="pull-left new_txt">                              <a href="http://lib.csdn.net/my/create/structure" target="_blank">新建？</a>                            </div>                          </div>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left" style="display:none">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/saved_resource(1).html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72" data-mtp="62" data-order="40" data-con="ad_content_2072">
+                     <script id="popuLayer_js_q" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/popuLayer.js" defer="defer" type="text/javascript"></script>
+                <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"></div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () { var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 }; window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 }); }</script><!-- 投放代码 --><script type="text/javascript">                    /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({ id: "u2895327" });  </script>  <script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/c.js" type="text/javascript"></script>
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/conviction_thinking">conviction_thinking的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/conviction_thinking?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/conviction_thinking?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/conviction_thinking/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "conviction_thinking";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/conviction_thinking";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+
+<a href="http://blog.csdn.net/epubit17/article/details/76811996" target="_blank">
+<font color="red"><strong>赠书 | 异步2周年,技术图书免费选</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="http://blog.csdn.net/broadview2006/article/details/77053543" target="_blank">
+<font color="blue"><strong>每周荐书：分布式、深度学习算法、iOS（评论送书）</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="http://gitee.com/enterprises?csdn-sq" target="_blank">
+<font color="red"><strong>项目管理+代码托管+文档协作，开发更流畅</strong></font></a>
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=PowerDesigner(%e5%85%ab)-%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e6%a8%a1%e5%9e%8b(%e7%94%a8%e4%be%8b%e5%9b%be%ef%bc%8c%e5%ba%8f%e5%88%97%e5%9b%be%ef%bc%8c%e7%b1%bb%e5%9b%be%ef%bc%8c%e7%94%9f%e6%88%90Java%e6%ba%90%e4%bb%a3%e7%a0%81%e5%8f%8aJava%e6%ba%90%e4%bb%a3%e7%a0%81%e7%94%9f%e6%88%90%e7%b1%bb%e5%9b%be)&u=http://blog.csdn.net/conviction_thinking/article/details/7959270"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/conviction_thinking/article/details/7959270">
+        PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href="http://www.csdn.net/tag/properties" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">properties</a><a href="http://www.csdn.net/tag/uml" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">uml</a><a href="http://www.csdn.net/tag/%e5%9b%be%e5%bd%a2" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">图形</a><a href="http://www.csdn.net/tag/actor" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">actor</a><a href="http://www.csdn.net/tag/%e5%b7%a5%e4%bd%9c" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">工作</a><a href="http://www.csdn.net/tag/%e8%af%ad%e8%a8%80" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">语言</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2012-09-09 00:25</span>
+            <span class="link_view" title="阅读次数">49805人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(8)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;PowerDesigner(%e5%85%ab)-%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e6%a8%a1%e5%9e%8b(%e7%94%a8%e4%be%8b%e5%9b%be%ef%bc%8c%e5%ba%8f%e5%88%97%e5%9b%be%ef%bc%8c%e7%b1%bb%e5%9b%be%ef%bc%8c%e7%94%9f%e6%88%90Java%e6%ba%90%e4%bb%a3%e7%a0%81%e5%8f%8aJava%e6%ba%90%e4%bb%a3%e7%a0%81%e7%94%9f%e6%88%90%e7%b1%bb%e5%9b%be)&#39;,&#39;7959270&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" onclick="javascript:report(7959270,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label onclick="GetCategoryArticles(&#39;1232432&#39;,&#39;conviction_thinking&#39;,&#39;top&#39;,&#39;7959270&#39;);">
+                        <span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">PowerDesigner<em>（8）</em></span>
+                      <img class="arrow-down" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a href="http://blog.csdn.net/conviction_thinking/article/category/1232432" target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1232432">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+        <div class="bog_copyright">         
+            <p class="copyright_p">版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod="popu_307" data-dsm="post">
+
+<h4>&nbsp; 面向对象模型</h4>
+<p>&nbsp; 面向对象模型是利用UML(统一建模语言)的图形来描述系统结构的模型，它从不同角度实现系统的工作状态。这些图形有助于用户，管理人员，系统分析人员，开发人员，<a href="http://lib.csdn.net/base/softwaretest" class="replace_word" title="软件测试知识库" target="_blank" style="color:#df3434; font-weight:bold;">测试</a>人员和其他人员之间进行信息交流。这里主要介绍用例图，序列图和类图。</p>
+<p><strong>&nbsp; 1.面向对象模型OOM</strong></p>
+<p>&nbsp;&nbsp;&nbsp; 面向对象模型是利用UML的图形描述系统结构的模型，可以利用PowerDesigner的面向对象模型进行创建。PowerDesigner支持UML的下列图形。</p>
+<ul>
+<li>用例图(User Case Diagram):通常用来定义系统的高层次草图，它从用户角度描述了应用的系统功能，指出了各个功能的外部操作者。</li><li>序列图(Sequence Diagram):描述系统如何实际完成在User Case图中定义的功能。可以画出对象(类的实例)之间交互时产生的时序关系。</li><li>类图(Class Diagram):描述类与类之间的静态关系。其中包括一系列的包，类，接口和它们之间的关系。类图是定义其他图的基础。</li></ul>
+<p><strong>&nbsp; 2.创建面向对象模型</strong></p>
+<p>&nbsp;&nbsp;&nbsp; (1)选择File-New Model命令或者单击工具栏中的New Model图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347118543_4248.png" alt="">，弹出New Model窗口。</p>
+<p>&nbsp;&nbsp;&nbsp; (2)在左侧是Model type栏中选择Object-Oriented Model(面向对象模型)选项，在右侧输入模型名称，语言，如图8-1所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347118593_3331.png" alt=""></p>
+<p align="center">图8-1<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (3)单击“确定”按钮，进入OOM设计工作区。在该工作区中可以定义OOM的属性和操作，也可以设计各种UML的图形。</p>
+<p>&nbsp;&nbsp;&nbsp; (4)选择Model-Model Properties命令，显示如图8-2所示OOM的Model Properties窗口。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347118695_5896.png" alt=""></p>
+<p align="center">图8-2<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (5)定义完毕后单击“确定”按钮。然后选择File-Save As命令，以PubInfoSys.OOM这个名称将所定义的模型存盘。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (6)设置模型的选择。选择Tools-Model Options命令，打开Model Options(模型选项)窗口。如图8-3所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347118886_5791.png" alt=""></p>
+<p align="center">图8-3<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (7)单击Set As Default按钮，设置为默认选项，然后单击OK按钮。</p>
+<p>&nbsp;<strong> 3.设计用例图</strong></p>
+<p>&nbsp;&nbsp; 3.1 用例图用于系统需求分析阶段，进行系统需求和功能设计，它包含执行者和用例两个要素。执行者指用户在系统中的角色，用例是用户与计算机的一次交互。用例图主要用来描述每个用例将有哪些执行者进行参与。</p>
+<ul>
+<li>定义用例：用例是外部可见的一个系统功能单元，这些功能由系统单元提供，通过一系列单元与一个或多个参与者之间交换的消息表达。&nbsp;</li><li>定义角色：角色描述了与系统相互作用的一组用户，最明显的角色是系统中的人，但也可能是系统本身。</li><li>定义关联：用例除了与其参与者发生关联外，还可以参与系统中的多个关系，允许定义的关联有关联，扩展，用例泛化，包括。</li></ul>
+<p>&nbsp; 3.2定义用例图</p>
+<p>&nbsp;&nbsp;&nbsp; 定义用例图如下：</p>
+<p>&nbsp;&nbsp;&nbsp; (1)单击“用例”图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120401_4944.png" alt="">定义4个用例，如图8-4所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120106_5546.png" alt=""></p>
+<p align="center">图8-4<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (2)选中第一个用例双击，打开Use Case Properties(用例属性)窗口，将Name属性修改为“查找”，将Code属性修改为Search,如图8-5所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120193_2631.png" alt=""></p>
+<p align="center">图8-5<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (3)利用同样的方法，修改其他3个用例属性如图8-6所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120313_4910.png" alt=""></p>
+<p align="center">图8-6<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (4)单击“执行者”图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120413_3785.png" alt="">定义3个执行者，如图8-7所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120445_1136.png" alt=""></p>
+<p align="center">图8-7<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (5)选中第一个执行者并双击，打开Actor Properties窗口，将Name属性修改为“顾客”，将Code属性修改为Buyer，如图8-8所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120550_8478.png" alt=""></p>
+<p align="center">图8-8<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (6)利用同样的方法，修改其他两个执行者的属性。</p>
+<p>&nbsp;&nbsp;&nbsp; (7)定义执行者和用例之间的关系。单击“关系”图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347120603_2841.png" alt="">，再单击执行者“顾客”并拖动鼠标至用例“查找”，释放鼠标，这时在执行者和用例之间建立了关系。双击该关系，打开Association Properties窗口，将Name属性修改为“查询商品”，将Code属性修改为SearchProduct。</p>
+<p>&nbsp;&nbsp;&nbsp; (8)按照步骤(7)的方法，在其他执行者和用例之间建立关系。</p>
+<p>&nbsp;&nbsp;&nbsp; (9)定义完成后的用例图如图8-9所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347121723_8402.png" alt=""></p>
+<p align="center">图8-9</p>
+<p align="left">&nbsp;<strong> 4设计序列图</strong></p>
+<p align="left">&nbsp;&nbsp;&nbsp; 4.1序列图(Sequence Diagram)是用来描述系统如何实现完成在Use Case图中定义的功能。可以画出对象之间的交互时产生的时序关系。它一方面描述了一次交互，交互中涉及类图中的类，另一方面细化了用例的描述。</p>
+<p align="left">&nbsp;&nbsp;&nbsp; 序列图有角色(Actor),对象(Object)，消息(Message)和激活期(Activation)几个要素如果8-10所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347175982_9391.png" alt=""></p>
+<p align="center">图8-10</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 消息类型有：</p>
+<ul>
+<li>Message:消息</li><li>Slef Message 递归消息</li><li>Call Message带有激活期的消息</li><li>Self Call Message带有激活期的递归消息</li><li>Return Message返回消息</li><li>Self Return Message递归返回消息</li></ul>
+<p>&nbsp; 4.2创建序列图</p>
+<p>&nbsp;&nbsp;&nbsp; (1)选择File-New Model命令，打开New Model窗口。在窗口左侧的Mode type栏选择Object-Oriented Model选项，在右侧的First diagram下拉列表框中选择Sequence Diagram选项，在Object language下拉框中选择<a href="http://lib.csdn.net/base/java" class="replace_word" title="Java 知识库" target="_blank" style="color:#df3434; font-weight:bold;">Java</a>选项，如图8-11所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347177170_4051.png" alt=""></p>
+<p align="center">图8-11<br>
+</p>
+<p><br>
+&nbsp;&nbsp;&nbsp; (2)选择完毕后单击“确定”按钮，进入PowerDesigner设计工作区。</p>
+<p>&nbsp;&nbsp;&nbsp; (3)单击Palette工具栏的Object图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347177251_5532.png" alt="">，在右边空白工作区单击鼠标，出现对象符号如图8-12所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347177259_2047.png" alt=""></p>
+<p align="center">图8-12<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (4)在设计区空白区域右击，鼠标指针变为箭头形状，双击对象符号，弹出Actor Properties窗口，在Name文本框中输入"呼叫方"，在Code文本框中输入“Caller”,然后单击“确定”按钮。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (5)重复步骤(3)(4),添加其他两个对象，Name分别为“交换机”和“被叫方”，Code分别为Exchange和Receiver。</p>
+<p>&nbsp;&nbsp;&nbsp; (6)单击Palette工具栏中的Message图标<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347177489_4953.png" alt="">，在“呼叫方”对象下方的虚线处单击，拖动鼠标至“交换机”对象下方的虚线释放鼠标，即可增加一个消息。</p>
+<p>&nbsp;&nbsp;&nbsp; (7)在设计区空白区域右击，鼠标指针变成箭头形状，双击对象符号，弹出“消息属性”窗口，在Name文本框中输入“拿起话筒”，在Code文本框中输入“Lift Reciever”,然后单击“确定”按钮。</p>
+<p>&nbsp;&nbsp;&nbsp; (8)重复(6)(7),添加其他消息。</p>
+<p>&nbsp;&nbsp;&nbsp; (9)最终的序列图如图8-13所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347177865_2218.png" alt=""></p>
+<p align="center">图8-13<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (10)选择File-Save命令，保存新建的面向对象模型</p>
+<p>&nbsp;<strong> 5设计类图</strong></p>
+<p>&nbsp; 类图是用一种抽象的方法来描述对象及对象之间的关系，并不能描述对象的所有细节。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; 5.1创建Class(类)</p>
+<p>&nbsp;&nbsp;&nbsp; (1)选择File-New Model命令，打开New Model窗口。在窗口左侧的Mode type栏选择Object-Oriented Model选项，在右侧的First diagram下拉列表框中选择Class Diagram选项，在Object language下拉框中选择Java选项，如图8-14所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347178931_4759.png" alt=""></p>
+<p align="center">图8-14<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (2)在类图工作区中单击Palette工具栏中的Class图标，创建一个类，双击类图的图形符号，打开Class Properties窗口。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (3)选择Detail选项卡，可以定义类的更多属性。</p>
+<p>&nbsp;&nbsp;&nbsp; (4)选择Attributes选项卡，可以为类增加属性。单击Add a Row图标，增加属性，也可以单击Add Attributes图标打开Selection窗口列表模型中其他类的属性，选择需要的属性，然后单击“OK”按钮即可。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (5)选择Operations选项卡，单击Add Operation图标，打开Selection窗口，从中可以选择该模型中其他类包含的操作。选择完毕后，单击OK按钮，所选的操作即可增加到当前类上。<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (6)选择Inner Classifies选项卡，可以为该类定义内部类。内部类是PowerDesigner的一个分类器，在UML中分类器是一个包含有属性和操作等的模型元素。定义完毕后可以通过Preview选项卡观察当前类或接口所包含的内部类代码，如图8-15所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347181064_1043.png" alt=""><br>
+</p>
+<p align="center">图8-15<br>
+</p>
+<p>&nbsp;&nbsp;&nbsp; (7)除了以上属性外，还可以定义Associations,Identifies等属性。属性定义完毕后创建的内容如图8-16所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347179040_5599.png" alt=""></p>
+<p align="center">图8-16<br>
+</p>
+<p align="left">&nbsp; 5.2创建联系</p>
+<p align="left">&nbsp; 在类图中，联系有关联，依赖，泛化和实现联系。</p>
+<p align="left"><strong>&nbsp; 6.生成Java的源代码</strong></p>
+<p align="left">&nbsp; 如图8-17所示类图，生成Java源代码。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347180149_7049.png" alt=""></p>
+<p align="center">图8-17<br>
+</p>
+<p align="left">&nbsp; (1)在类图中选择Language-Generate <a href="http://lib.csdn.net/base/java" class="replace_word" title="Java 知识库" target="_blank" style="color:#df3434; font-weight:bold;">Java </a>Code命令，打开Generation窗口，显示模型中包含的类。<br>
+</p>
+<p align="left">&nbsp; (2)在Selection选项卡的Classes选项卡中选择类，在Directory栏中输入Java源代码的目标路径。</p>
+<p align="left">&nbsp; (3)在Options选项卡中定义Java生成选项。</p>
+<p align="left">&nbsp; (4)在Tasks选项卡中定义Java生成任务选项，如图8-18所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347180372_3280.png" alt=""></p>
+<p align="center">图8-18<br>
+</p>
+<p align="left">&nbsp; (5)单击“确定”按钮，开始生成Java源文件，生成完成显示Generated Files窗口。<br>
+</p>
+<p align="left">&nbsp; (6)选择一个源文件，单击Edit按钮，将在文本编辑器中显示该文件的内容。如图8-19所示。</p>
+<p align="center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347180958_1972.png" alt=""><br>
+</p>
+<p align="center">图8-19<br>
+</p>
+<p align="left"><strong>&nbsp; 7.根据Java代码生成类图</strong></p>
+<p align="left">&nbsp; &nbsp;(1)选择File-Reverse Engineer-Object Language弹出如图8-20所示。</p>
+<p align="left" style="text-align:center">&nbsp;&nbsp;<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347974943_3218.png" alt=""></p>
+<p align="left" style="text-align:center">图8-20</p>
+<p align="left">&nbsp; &nbsp;(2)在Object language栏选择Java,单击确定进入如下界面，如图8-21所示。<br>
+</p>
+<p align="left" style="text-align:center">&nbsp;&nbsp;<img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347975035_7994.png" alt=""></p>
+<p align="left" style="text-align:center">图8-21</p>
+<p align="left">&nbsp; &nbsp;(3)点击Add，添加Java文件，再单击确定即可生成相应的Java类图(在Reverse engineer栏中还可以选择Java字节码文件或文件目录),如图8-23所示。<br>
+</p>
+<p align="left" style="text-align:center"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1347975429_7211.png" alt=""><br>
+</p>
+<p align="left" style="text-align:center">图8-23</p>
+<p align="left">&nbsp;&nbsp;</p>
+<p><br>
+</p>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1502898226472">
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" articleid="7959270">
+            <dl id="btnDigg" class="digg digg_disable" onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>13</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable" onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>3</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" target="_blank">&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" target="_blank">&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;http://blog.csdn.net/conviction_thinking/article/details/7959260&#39;;">上一篇</span><a href="http://blog.csdn.net/conviction_thinking/article/details/7959260" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">PowerDesigner(七)-数据库的生成和修改</a></li>
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;http://blog.csdn.net/conviction_thinking/article/details/7960786&#39;;">下一篇</span><a href="http://blog.csdn.net/conviction_thinking/article/details/7960786" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">PowerDesigner(九)-模型文档编辑器(生成项目文档)</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article">
+                    <h4></h4>
+                    <div class="similar_c" style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/h348592532/article/details/50511265" title="使用PowerDesigner进行面向对象分析与UML建模" strategy="BlogCommendFromBaidu" target="_blank">使用PowerDesigner进行面向对象分析与UML建模</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/downmoon/article/details/4387534" title="UML常见工具之Powerdesigner(downmoon)" strategy="BlogCommendFromBaidu" target="_blank">UML常见工具之Powerdesigner(downmoon)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/coderinchina/article/details/54889919" title="powerDesigner绘制类图" strategy="BlogCommendFromBaidu" target="_blank">powerDesigner绘制类图</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zi_jun/article/details/8084276" title="Powerdesiger 画uml用例图" strategy="BlogCommendFromBaidu" target="_blank">Powerdesiger 画uml用例图</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/yerenyuan_pku/article/details/70217321" title="使用PD(UML工具——Power Designer)设计数据库" strategy="BlogCommendFromBaidu" target="_blank">使用PD(UML工具——Power Designer)设计数据库</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u010098331/article/details/51454395" title="UML常见工具之Powerdesigner" strategy="BlogCommendFromBaidu" target="_blank">UML常见工具之Powerdesigner</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wangpeng047/article/details/7164643" title="PowerDesigner使用教程" strategy="BlogCommendFromBaidu" target="_blank">PowerDesigner使用教程</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/luoweifu/article/details/23287941" title="UML建模工具Rose与PowerDesigner，两款建模工具的对比" strategy="BlogCommendFromBaidu" target="_blank">UML建模工具Rose与PowerDesigner，两款建模工具的对比</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/pengfeixiong/article/details/7985976" title="三大UML建模工具Visio、Rational Rose、PowerDesign的区别" strategy="BlogCommendFromBaidu" target="_blank">三大UML建模工具Visio、Rational Rose、PowerDesign的区别</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/samxx8/article/details/6456428" title="Powerdesigner OOM中UML类图的相关名词解释" strategy="BlogCommendFromBaidu" target="_blank">Powerdesigner OOM中UML类图的相关名词解释</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+            <script> 
+                (function() { 
+                    var s = "_" + Math.random().toString(36).slice(2); 
+                    document.write('<div id="' + s + '"></div>'); 
+                    (window.slotbydup=window.slotbydup || []).push({ 
+                        id: '4228013', 
+                        container: s, 
+                        size: '0,0', 
+                        display: 'inlay-fix' 
+                    }); 
+                })(); 
+            </script><div id="_tvv0zal4e584k74jczl7hkt9"></div>
+    </div>
+
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/conviction_thinking/svc/GetSuggestContent/7959270",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+        <dl class="blog-ass-articl tracking-ad" id="res-relatived" data-mod="popu_84"> 
+             <dt><span>猜你在找</span></dt>    
+           
+    
+           
+
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/huiyiCourse/series_detail/54?utm_source=blog7" title="【直播】机器学习&amp;数据挖掘7周实训--韦玮" strategy="undefined" target="_blank">【直播】机器学习&amp;数据挖掘7周实训--韦玮</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/combo/detail/471?utm_source=blog7" title="【套餐】系统集成项目管理工程师顺利通关--徐朋" strategy="undefined" target="_blank">【套餐】系统集成项目管理工程师顺利通关--徐朋</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/huiyiCourse/series_detail/55?utm_source=blog7" title="【直播】3小时掌握Docker最佳实战-徐西宁" strategy="undefined" target="_blank">【直播】3小时掌握Docker最佳实战-徐西宁</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/combo/detail/505?utm_source=blog7" title="【套餐】机器学习系列套餐（算法+实战）--唐宇迪" strategy="undefined" target="_blank">【套餐】机器学习系列套餐（算法+实战）--唐宇迪</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/huiyiCourse/series_detail/52?utm_source=blog7" title="【直播】计算机视觉原理及实战--屈教授" strategy="undefined" target="_blank">【直播】计算机视觉原理及实战--屈教授</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/combo/detail/178?utm_source=blog7" title="【套餐】微信订阅号+服务号Java版 v2.0--翟东平" strategy="undefined" target="_blank">【套餐】微信订阅号+服务号Java版 v2.0--翟东平</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/huiyiCourse/series_detail/47?utm_source=blog7" title="【直播】机器学习之矩阵--黄博士" strategy="undefined" target="_blank">【直播】机器学习之矩阵--黄博士</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/combo/detail/178?utm_source=blog7" title="【套餐】微信订阅号+服务号Java版 v2.0--翟东平" strategy="undefined" target="_blank">【套餐】微信订阅号+服务号Java版 v2.0--翟东平</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/huiyiCourse/series_detail/48?utm_source=blog7" title="【直播】机器学习之凸优化--马博士" strategy="undefined" target="_blank">【直播】机器学习之凸优化--马博士</a>
+                        </dd>
+                        <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                             <a href="http://edu.csdn.net/combo/detail/484?utm_source=blog7" title="【套餐】Javascript 设计模式实战--曾亮" strategy="undefined" target="_blank">【套餐】Javascript 设计模式实战--曾亮</a>
+                        </dd>
+
+                  
+              
+                 
+        </dl>
+
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_4869617"><dt class="comment_head" floor="8">8楼 <span class="user"><a class="username" href="http://blog.csdn.net/BourneSeaward" target="_blank">BourneSeaward</a> <span class="ptime">2015-03-23 12:17发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4869617" username="BourneSeaward"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/BourneSeaward" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_bourneseaward.jpg" width="40" height="40"></a></dd><dd class="comment_body">类图如何添加list属性？</dd></dl><dl class="comment_item comment_topic" id="comment_item_4693107"><dt class="comment_head" floor="7">7楼 <span class="user"><a class="username" href="http://blog.csdn.net/u011580493" target="_blank">AC_vitasoy</a> <span class="ptime">2015-01-07 23:10发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4693107" username="u011580493"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/u011580493" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_u011580493.jpg" width="40" height="40"></a></dd><dd class="comment_body">非常感谢，刚刚开始弄UML。这个对初学者非常有用</dd></dl><dl class="comment_item comment_topic" id="comment_item_3847209"><dt class="comment_head" floor="6">6楼 <span class="user"><a class="username" href="http://blog.csdn.net/yaerfeng" target="_blank">yaerfeng</a> <span class="ptime">2014-05-17 17:44发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3847209" username="yaerfeng"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/yaerfeng" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_yaerfeng.jpg" width="40" height="40"></a></dd><dd class="comment_body">java代码下载：http://www.zuidaima.com/share/search.htm?key=java</dd></dl><dl class="comment_item comment_topic" id="comment_item_3362449"><dt class="comment_head" floor="5">5楼 <span class="user"><a class="username" href="http://blog.csdn.net/lvye351" target="_blank">王海龙-南京</a> <span class="ptime">2014-01-01 12:45发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3362449" username="lvye351"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/lvye351" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_lvye351.jpg" width="40" height="40"></a></dd><dd class="comment_body">转换后效果挺好。可惜要一个目录一个目录地添加java代码</dd></dl><dl class="comment_item comment_topic" id="comment_item_3320829"><dt class="comment_head" floor="4">4楼 <span class="user"><a class="username" href="http://blog.csdn.net/bingaabing" target="_blank">bingaabing</a> <span class="ptime">2013-12-24 14:56发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3320829" username="bingaabing"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/bingaabing" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_bingaabing.jpg" width="40" height="40"></a></dd><dd class="comment_body">虽然很基础，但确实很详细，省去初学者很多时间；赞一个</dd></dl><dl class="comment_item comment_topic" id="comment_item_2773075"><dt class="comment_head" floor="3">3楼 <span class="user"><a class="username" href="http://blog.csdn.net/zhangfang_zf" target="_blank">zhangfang_zf</a> <span class="ptime">2013-07-30 17:03发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2773075" username="zhangfang_zf"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/zhangfang_zf" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_zhangfang_zf.jpg" width="40" height="40"></a></dd><dd class="comment_body">GOOD</dd></dl><dl class="comment_item comment_topic" id="comment_item_2415073"><dt class="comment_head" floor="2">2楼 <span class="user"><a class="username" href="http://blog.csdn.net/conviction_thinking" target="_blank">conviction_thinking</a> <span class="ptime">2012-10-28 21:39发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2415073" username="conviction_thinking"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/conviction_thinking" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_conviction_thinking.jpg" width="40" height="40"></a></dd><dd class="comment_body">呵呵！这个是基础，主要是入门。要实用和精通还的自己多花时间去实践。</dd></dl><dl class="comment_item comment_topic" id="comment_item_2399927"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/zyk906705975" target="_blank">小朱xl</a> <span class="ptime">2012-10-14 10:40发表</span>  <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2399927" username="zyk906705975"> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/zyk906705975" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/3_zyk906705975.jpg" width="40" height="40"></a></dd><dd class="comment_body">对于初学者来说，挺好！</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fconviction_thinking%2Farticle%2Fdetails%2F7959270">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '7959270';
+    var commentscount = 8;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/conviction_thinking" target="_blank">
+    <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/1_conviction_thinking.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/conviction_thinking" class="user_name" target="_blank">conviction_thinking</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=conviction_thinking&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>153397次</span></li>
+    <li>积分：<span>1268</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/blog4.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：1268 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>17篇</span></li>
+    <li>转载：<span>5篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>16条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank" data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1164872" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Struts2</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1164873" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">开源</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1164874" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">框架</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1210888" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Spring</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1232432" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">PowerDesigner</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1234260" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">设计模式</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/conviction_thinking/article/category/1268368" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/10">2012年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/09">2012年09月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/08">2012年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/07">2012年07月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/06">2012年06月</a><span>(3)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2012/04">2012年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/conviction_thinking/article/month/2011/10">2011年10月</a><span>(3)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270" title="PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)" target="_blank">PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)</a><span>(49757)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7957367" title="PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)" target="_blank">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a><span>(27154)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7957166" title="PowerDesigner(四)-业务处理模型" target="_blank">PowerDesigner(四)-业务处理模型</a><span>(15394)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7952988" title="PowerDesigner(三)-企业架构模型" target="_blank">PowerDesigner(三)-企业架构模型</a><span>(11936)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7948664" title="PowerDesigner(二)-项目和框架矩阵" target="_blank">PowerDesigner(二)-项目和框架矩阵</a><span>(10412)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7958368" title="PowerDesigner(六)-物理数据模型(PDM逆向工程)" target="_blank">PowerDesigner(六)-物理数据模型(PDM逆向工程)</a><span>(7198)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7939868" title="PowerDesigner(一)-PowerDesigner概述(系统分析与建模)" target="_blank">PowerDesigner(一)-PowerDesigner概述(系统分析与建模)</a><span>(5877)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7960786" title="PowerDesigner(九)-模型文档编辑器(生成项目文档)" target="_blank">PowerDesigner(九)-模型文档编辑器(生成项目文档)</a><span>(5067)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959260" title="PowerDesigner(七)-数据库的生成和修改" target="_blank">PowerDesigner(七)-数据库的生成和修改</a><span>(3300)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7837314" title="Java教程(源码+PPT)" target="_blank">Java教程(源码+PPT)</a><span>(2888)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel tracking-ad" data-mod="popu_341">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7959270" title="PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)" target="_blank">PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)</a><span>(8)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7957367" title="PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)" target="_blank">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a><span>(5)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7952988" title="PowerDesigner(三)-企业架构模型" target="_blank">PowerDesigner(三)-企业架构模型</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7837314" title="Java教程(源码+PPT)" target="_blank">Java教程(源码+PPT)</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7816278" title="Spring 3.1包详解" target="_blank">Spring 3.1包详解</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/8122393" title="Android(一)-Android简介" target="_blank">Android(一)-Android简介</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7687892" title="Struts2之零配置" target="_blank">Struts2之零配置</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7687858" title="Struts2之国际化" target="_blank">Struts2之国际化</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/7650911" title="Struts2 Example 001" target="_blank">Struts2 Example 001</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/conviction_thinking/article/details/6851598" title="jQuery插件大全" target="_blank">jQuery插件大全</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/76092129" target="_blank">* CSDN日报20170725——《新的开始，从研究生到入职亚马逊》</a></li>
+<li><a href="http://blog.csdn.net/javazejian/article/details/75043422" target="_blank">* 深入剖析基于并发AQS的重入锁(ReetrantLock)及其Condition实现原理</a></li>
+<li><a href="http://blog.csdn.net/jiangwei0910410003/article/details/75512732" target="_blank">* Android版本的"Wannacry"文件加密病毒样本分析(附带锁机)</a></li>
+<li><a href="http://blog.csdn.net/mindfloating/article/details/75948781" target="_blank">* 工作与生活真的可以平衡吗？</a></li>
+<li><a href="http://blog.csdn.net/poem_qianmo/article/details/75943714" target="_blank">* 《Real-Time Rendering 3rd》 提炼总结——高级着色：BRDF及相关技术</a></li>
+<li><a href="http://blog.csdn.net/dog250/article/details/75735806" target="_blank">* 《三体》读后思考-泰勒展开/维度打击/黑暗森林</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7952988#comments">PowerDesigner(三)-企业架构模型</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/Javainging" class="user_name">Java_er</a>:
+很不错，收藏了。谢谢提供。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7952988#comments">PowerDesigner(三)-企业架构模型</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yiqing95" class="user_name">yiqing95</a>:
+文章很精彩 相见恨晚
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7957367#comments">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u013201439" class="user_name">Bboy-AJ</a>:
+好东西，有用到。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7837314#comments">Java教程(源码+PPT)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/terrychen19710516" class="user_name">terrychen19710516</a>:
+真的假的？这么全？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/BourneSeaward" class="user_name">BourneSeaward</a>:
+类图如何添加list属性？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u011580493" class="user_name">AC_vitasoy</a>:
+非常感谢，刚刚开始弄UML。这个对初学者非常有用
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/zhuojiajin" class="user_name">zhuojiajin</a>:
+非常给力
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010066934" class="user_name">yysx</a>:
+学习了，之前COM模型转换PDM模型没有选择目标数据库
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yaerfeng" class="user_name">yaerfeng</a>:
+java代码下载：http://www.zuidaima.com/share/search.htm?...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#comments">PowerDesigner(五)-概念数据模型(CDM生成LDM,PDM和OOM)</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/ganshenml" class="user_name">ganshenml</a>:
+不错，赞！
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+                   <!-- 广告位开始 -->                    <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true" data-mtp="63" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 500px;">
+                         <div id="nav_show_top_stop" style="width: 200px; height: 500px; z-index: 1000; position: fixed; top: 0px;"><div id="cpro_u2734128"></div>
+                             <div id="cpro_u3031287"></div></div>
+                   </div>
+                <script type="text/javascript">
+                    setTimeout(function () {
+                        var naviga_offsetTop = 0;
+                        function naviga_stay_top() { var scrollTop = jQuery(document).scrollTop(); if (scrollTop > naviga_offsetTop) { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": "0px" }); } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); } }
+                        function onload_function() { naviga_offsetTop = jQuery("#nav_show_top_stop").position().top; jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top); jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top); } jQuery(document).ready(onload_function);
+
+                    }, 200);
+                </script>                    
+<script type="text/javascript">(window.cproArray = window.cproArray || []).push({ id: "u2734128" });  </script> 
+                    <script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/c.js" type="text/javascript"></script> 
+                   <script type="text/javascript">
+                       /*PC端-博客内容页左侧Button2-200*200-2017/7/10*/
+                       (window.cproArray = window.cproArray || []).push({ id: "u3031287" });
+</script>
+<script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/c.js"></script>
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+   
+     <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/MathJax.js"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/csdn_blog_detail.min.js" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="javascript:void(0);" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-660-0108</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏知之为计算机有限公司</span><span class="interval">|</span><span>江苏乐知网络技术有限公司</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2017, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/saved_resource(2).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/notify.js"></script><input type="hidden" id="aa_g_data_ids">
+        
+    <script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/csdn_public_blog_detail.min.js"></script>
+
+    <script type="text/javascript" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/showblogmedal.ashx"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/52b5334.js"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover" style="display:none"></div>
+    <div class="pop pop_CA" style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon" id="fapancle" onclick="$(&#39;.pop_CA&#39;).hide();$(&#39;.pop_CA_cover&#39;).hide();"></span>
+          </div>
+          <iframe src="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/saved_resource(3).html" id="fa" frameborder="0" width="100%" height="360" scrolling="no"></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+
+   
+<div id="mask_code"></div><div class="gist_edit"><div class="save_snippets clearfix"><div class="tit"><h3>保存代码片</h3><span>整理和分享保存的代码片，请访问<a href="https://code.csdn.net/snippets_manage" target="_blank">代码笔记</a></span></div><div class="con_form"><ul class="gist_edit_list clearfix"><li><span class="red">*</span><span class="txt">标题</span><input id="form_title" class="form-input" placeholder="PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)" type="text"></li><li><span class="red">*</span><span class="txt">描述</span><textarea id="form-textarea" class="form-textarea" placeholder="PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图)： http://blog.csdn.net/conviction_thinking/article/details/7959270"></textarea></li><li><span class="red">&nbsp;</span><span class="txt">标签</span><div id="divSearchTags"><span class="label blog_tag"><span>properties</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>uml</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>图形</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>actor</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>工作</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>语言</span><a title="Removing tag" href="javascript:;">x</a></span><input id="insertTag" class="insertTag" placeholder="请输入标签，按Enter生成(最多5项)" type="text" value="" name="insertTag" maxlength="21" style="color: rgb(51, 51, 51);"><input id="OrganTag" class="OrganTag" type="hidden" name="OrganTag" value="properties,uml,图形,actor,工作,语言,"><input id="OldOrganTag" class="OldOrganTag" type="hidden" name="OldOrganTag" value=""><input type="hidden" name="txtSearchTags"></div></li></ul></div><div class="bottom-bar"><a href="javascript:;" class="btn-submit btn-cancel">取消</a><span class="tracking-ad" data-mod="popu_250"><a class="btn-submit btn-confirm" href="javascript:;" target="_blank">确定</a></span></div></div></div><div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><link rel="stylesheet" type="text/css" media="screen" href="./PowerDesigner(八)-面向对象模型(用例图，序列图，类图，生成Java源代码及Java源代码生成类图) _files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="csdn-tracking-statistics" chg-blk="0"><a id="com-quick-QRcode" class="QRcodebg1" title="扫描二维码" style="top:140px"><span class="closeQR"></span></a><a id="com-quick-reply" title="快速回复" style="top:274px"></a><a id="com-quick-collect" title="我要收藏" style="top:312px"></a><a id="com-d-top-a" style="top: 350px; display: inline;" title="返回顶部" onclick=""></a></div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/conviction_thinking/article/details/7959270#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/conviction_thinking/article/details/7959270#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/conviction_thinking/article/details/7959270#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div><div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-top.png&quot;);"></div></div></body></html>

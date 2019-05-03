@@ -1,0 +1,37 @@
+学DQL 查询语句（重要）
+排序查询 order by 字段名 升序关键字 ，字段名 降序关键字
+	asc升序（默认） desc降序
+聚合函数 sum求和 avg求平均值 max 求最大值 min求最小值 count 求个数
+	注意聚合函数都会排除null值
+	横向计算可以直接用+号 
+		例如 select 列名+列名 from 表名
+	将一列数据作为一个整体，进行纵向计算
+	count可以和ifnull使用
+分组查询  
+	语法：group by 分组字段 having 分组之后的条件  where是分组之前的条件
+	注意：分组之后查询的只代表：分组子弹，聚合函数字段
+	分组就是对某一列数据中有多个相同的数据，进行分类，然后在结合聚合函数
+	
+分页查询
+	语法limit 开始的索引，每页查询条数  开始的索引不包含头
+	公式： 开始的索引 = （当前的页码-1）* 每页显示条数
+	limit 是一个方言 mysql的方言
+
+###约束：
+	概念：对表中的数据进行限定，保证数据的正确性、有效性和完整性。
+	
+	分类：
+	1，主键约束：关键字 primary key 非空且唯一
+	2，非空约束：关键字 not null 非空 某一列的值不能为空
+	3，唯一约束：关键字 unique 内容唯一 某一列的值不能重复
+	4，外键约束：关键字 foreign key 主从表关系 约束主从表数据
+		constraint 外键名称 foreign key 外键列 references 主表名称（主表列名称）
+	5，默认约束：关键字 default 默认值
+	6，自动增长 auto_increment 一般用于主键
+
+
+级联操作（主表数据变动，从表跟着一起动）
+	级联更新需要在 设置外键时 添加级联操作；
+	语法 在创建表之后 
+	alter table 表名add constraint 外键名称 foreign key （外键字段名称）
+		references 主表名称 （主表列名称） on update cascade on delete cascade

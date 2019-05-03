@@ -1,0 +1,36 @@
+JDBC基本概念
+	概念：Java DataBase Connectivity Java数据库连接，Java语言操作数据库
+	JDBC本质：是一套定义了操作所有关系型数据库的规则（接口），数据库驱动
+		其实就是官方（sun）公司定义的一套操作所有关系型数据库的规则，即接口。各个数据库厂商去实现这套接口、听数据库驱动jar包。我们可以使用这套接口，正在执行的代码是驱动jar包中的实现类（是数据库厂商来实现  ）
+
+快速入门
+	1，导入JDBC驱动jar包 mysql-connector-java-5.1.37-bin-jar包、
+	2，注册驱动
+	3，获取数据库的连接对象 connection
+	4，定义sql语句
+	5，获取执行sql语句对象 statement 执行者
+	6，执行sql，接收返回结果
+	7，处理结果
+	8，释放资源
+
+
+
+详解各个对象
+	DriverManager：驱动管理对象
+ 			功能：
+				1，注册驱动：告诉程序该使用那个数据块驱动jar包
+				2，获取数据库连接对象
+					参数url指定连接的路径
+						user 数据库用户名
+						password 数据库密码
+	Connection：数据库连接对象
+			执行sql对象
+			管理事物
+				setAutoCommit（boolean） 设置为false 开启事物
+				rollback
+				commit
+	Statement：执行sql的对象	专门用来执行sql语句 DML int executeUpdate() DQL ResultSet executeQuery()
+	ResultSet:结果集对象	
+	PreparedStatement：执行sql的对象 获取预编译执行对象 防止sql注入 
+		sql注入问题：
+			输入用户随便输，输入密码 a' or 'a'='a'

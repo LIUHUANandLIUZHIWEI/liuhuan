@@ -1,0 +1,155 @@
+概念：
+	JavaScript是一门浏览器客户端脚本语言
+	运行在每一个客户端浏览器中的，每一个浏览器都有JavaScript的解析引擎
+	脚本语言不需要编译，直接就可以被浏览器解析执行了
+	可以来增强用户的HTML页面的交互过程，可以控制HTML元素，让页面有一些动态效果
+
+JavaScript分为三个部分组成
+	JavaScript=ECAScript + BOM + DOM （DOM和BOM 都是JavaScript自己特有的东西）
+	ActionScript Flash 移动客户端
+
+ECMAScript：客户端脚本语言的标准
+	基本语法：在HTML页面中任意位置定义《script》《/script》 标签体内就是脚本代码
+	也可以从外部引用 《script src=“js文档的目录”》
+	客户端脚本语言 的执行顺序是 从上往下执行 （包括js代码）所以js代码最好是放在最下面
+
+原始数据类型（基本数据类型）
+	number：数字。
+	String：字符和字符串
+	boolean：true和false 0是false其他都是true
+	null：一个对象为空的占位符
+	undefined：未定义。如果一个变量没有给初始化值，则会默认为undefined
+	
+现在统一都用var 定义 var可以接受任意类型 上边只是代表类型要想做到这个var是什么类型可以用typeof（变量名） 获取类型 null运算后得到都是Object
+	运算符和Java的一样 ++ -- 
+	不一样的是 有个+和- ： 是正负号 字符串用 +得到的是NaN 数字字符串的道德就是数字类型
+	
+类型转换：
+	String转number：按照字面值转换就是数字。如果不是就转为NaN（不是数字的数字）
+	boolean转为number：1为true，false为0
+
+算数运算符：
+	和Java差不多 + - * / %
+赋值运算：
+	和Java一样 = += - =
+比较运算符
+	<  > <= >= ==  ===(全等于) != !== 
+	(===) 判断数值之前，先判断类型是否一致
+	（==） 只判断 两边的字符是否一致
+	比较方式：
+		类型相同：直接比较
+			字符串：按照字典顺序比较，按照逐一比较 ，直到得到大小为止
+		类型不同：先进行类型转换，在比较
+			===：全等于 。在比较之前，先判断类型，如果类型不一样，则直接返回false
+逻辑运算符：
+	和Java一样 && || ！
+	其他类型转为boolean：
+		number：0或NaN为假，其他为真
+		string：除空字符串（“”） 其他都为true
+		null&undefined：都是false
+		对象：所有对象都为true var ar=new Date()
+三元运算符
+	和Java一样 var a>b? 1 : 0;
+	
+流程控制语句
+	基本上和Java一致
+	在switch（变量）{
+		
+	}	
+		在JS中，switch语句可以接收任意的原始数据类型
+		Java中只能方法byte short char int 枚举 String
+	function ：函数（方法）对象
+			创建：var fun=new function（形式参数列表，方法体）（这种基本不用）
+			最常用的是
+			function 方法名称（形式参数列表）{
+				方法体（可以有返回值 return）函数可以使用var 接收
+				}
+			var 方法名=function（形式参数）{方法体}
+	
+ 		 4. 特点：
+                    【1. 方法定义是，形参的类型不能写,返回值类型也不能写。】
+                    2. 方法是一个对象，如果定义名称相同的方法，会覆盖,JS中没有方法重载的概念；
+                    3. 在JS中，方法的调用只与方法的名称有关，和参数列表无关
+                    4. 在方法声明中有一个隐藏的内置对象（数组），arguments,封装所有的实际参数
+                5. 调用：
+                    方法名称(实际参数列表);
+			
+			2. Array:数组对象    感觉是集合跟数组的结合体 
+                1. 创建：
+                    1. var arr = new Array(元素列表);
+                    2. var arr = new Array(默认长度);     var a = new Array(5);  var a = [5];  a[1]=10;   a.push(4);    5,10,4
+                    3. var arr = [元素列表];   var arr = [10];  arr.push(11);
+                2. 方法
+                    join(参数):将数组中的元素按照指定的分隔符拼接为字符串;          arr.join("-");      
+                    push()	向数组的末尾添加一个或更多元素，并返回新的长度。
+				    reverse()  反转
+				    sort()     排序
+                3. 属性
+                    length:数组的长度
+                4. 特点：和Java中的中集合类似
+                    1. JS中，数组元素的类型可变的。
+                    2. JS中，数组长度可变的。
+			3. Boolean
+			4. Date：日期对象
+                1. 创建：
+                    var date = new Date();
+
+                2. 方法：
+                    toLocaleString()：返回当前date对象对应的时间本地字符串格式
+                    getTime():获取毫秒值。返回当前如期对象描述的时间到1970年1月1日零点的毫秒值差
+			5. Math：数学对象
+                1. 创建：
+                    * 特点：Math对象不用创建，直接使用。  Math.方法名();
+                2. 方法：
+                    random():返回 0 ~ 1 之间的随机数。 含0不含1
+                    ceil(x)：对数进行上舍入。  3.2   4
+                    floor(x)：对数进行下舍入。   3.9  3
+                    round(x)：把数四舍五入为最接近的整数。  3.5 4   3.4 3
+					pow(x,y);  返回x的y次幂；
+                3. 属性：
+                    PI    MATH.PA = 3.14
+			6. Number
+			7. String
+			8. RegExp：正则表达式对象
+				1. 正则表达式：定义字符串的组成规则。
+					1. 单个字符:[^a]  除了a什么都行  
+					    （[a]）代表一组
+						如： [a] [ab] [a-zA-Z0-9_]
+						* 特殊符号代表特殊含义的单个字符:
+							\d:单个数字字符 [0-9]
+							\w:单个单词字符[a-zA-Z0-9_]
+					2. 量词符号：
+						?：表示出现0次或1次
+						*：表示出现0次或多次
+						+：出现1次或多次
+						{m,n}:表示 m<= 数量 <= n
+							* m如果缺省： {,n}:最多n次
+							* n如果缺省：{m,} 最少m次
+					3. 开始结束符号
+						* ^:开始
+						* $:结束
+				2. 正则对象：
+					1. 创建
+						1. var reg = new RegExp("正则表达式");
+						2. var reg = /正则表达式/;
+					2. 方法	
+						1. boolean test(参数):验证指定的字符串是否符合正则定义的规范	
+			9. Global
+				1. 特点：全局对象，这个Global中封装的方法不需要对象就可以直接调用。  方法名();
+				2. 方法：
+				    encodeURI():url编码   只针对于网址的中文
+				    decodeURI():url解码
+
+				    encodeURIComponent():url编码,编码的字符更多  
+				    decodeURIComponent():url解码
+
+				    parseInt():将字符串转为数字  
+				        * 逐一判断每一个字符是否是数字，直到不是数字为止，将前边数字部分转为number
+				    isNaN():判断一个值是否是NaN
+				        * NaN六亲不认，连自己都不认。NaN参与的==比较全部问false
+
+				    eval():讲 JavaScript 字符串，并把它作为脚本代码来执行。   
+                3. URL编码
+                   传智播客 =  %E4%BC%A0%E6%99%BA%E6%92%AD%E5%AE%A2基本对象;
+			
+	

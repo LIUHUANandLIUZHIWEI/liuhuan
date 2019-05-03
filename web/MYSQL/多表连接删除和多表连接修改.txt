@@ -1,0 +1,9 @@
+多表删除
+ delete from t1 where 条件
+2    delete t1 from t1 where 条件
+3    delete t1 from t1,t2 where 条件
+4    delete t1,t2 from t1,t2 where 条件
+
+
+多表修改
+update 表1 ,表2  ,表3 set 表1.postion = 表2.id  where  表2.dvalue = 表3.testquarters and 表1.pinCode = 表3.testpinCode and 表1.`name` = 表3.testname;

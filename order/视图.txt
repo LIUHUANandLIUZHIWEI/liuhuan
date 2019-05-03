@@ -1,0 +1,203 @@
+create view 视图名 as select name,password from 表名 ; 创建视图
+
+使用视图 select * from 视图名 
+
+索引的概念：索引就是在表的列上构建一个二叉树
+ 达到大幅度提高查询的效率的目的 ，但是索引会影响增删改的效率
+
+单列索引
+create index 索引名 on 表名（表字段）;
+触发规制 ：单列索引触发规则，条件必须是索引中的原始值
+
+复合索引 
+create index 索引名  on 表名 （字段1，字段2）;
+主键默认键索引
+
+plsql 编程##################
+赋值操作 可以使用：=  也可以使用SQL语句赋值
+declare
+ 声明变量
+	i  number(2);
+	变量名 类型 
+字符类型
+	 s varchar2(34) := 'xiaomi';
+引用类型
+	emp  emp.job%type;	
+
+记录型变量
+	emprow emp%rowtype;
+begin
+输出语句
+dbms_outupt.put_line(i);
+
+引用类型 赋值
+select ename into ena from emp where empno=7788;
+
+记录型赋值  这样相当于一张表 可以和表一样操作 字段
+select * into emprow from where empno=7788;
+ 
+end;
+
+如何定义常量  在声明常量时 必须赋值
+变量名 a  关键字constant 类型 number(10) ：= 34；
+
+取余	
+mod()
+
+declare 
+
+i number(10) := &ii; 输入数字
+begin 
+if 逻辑判断 then
+ 输出语句
+elsif 逻辑判断 then
+输出语句
+elsif  逻辑判断 then
+输出语句
+else 
+end if; 必须以end if 结束
+
+end;
+
+
+循环
+
+loop 循环
+
+while 循环
+declare
+
+ i number(10):=1;
+
+begin
+
+while 判断逻辑 i>10 loop;
+	语句和判读
+	i := i+1; 避免死循环
+end loop;
+end;
+
+
+exit 循环
+declare 
+i number(10) :=1;
+
+begin 
+loop 
+ 	exit when i>10;
+	i := i+1;
+end loop;
+
+end;
+
+for 循环
+declare 
+	i number(10) :=1;
+begin
+	这里是大于1 小于10    reverse 反转
+for i in 1..10 loop
+	输出
+	end loop	;
+end;
+
+
+游标：可以存放 多个对象
+
+declare
+
+cursor c1 id select *from emp; 游标
+
+emprow emp%rowtype;
+begin
+
+open c1;
+	loop
+		fetch c1 into  emprow;
+		exit when c1%notfound;
+		输出
+	end loop;
+close c1;
+end;
+
+
+储存过程
+
+create or replace  procedure 过程名（参数列表）
+declare/is
+
+begin
+
+end;
+
+
+create or replace procedure p1(eno  emp.empno%type)
+is
+
+begin
+	update emp set sal=sal+100 where empno= eno;
+end;
+
+
+
+储存函数
+create or replace function 函数名（参数列表框） return 返回值
+is
+
+
+begin
+
+return 返回值 ，需要和上面的返回值相同
+end;
+
+declare
+
+begin
+
+end;
+
+
+out类型参数如何使用  存储过程
+create or replace procedure  储存过程名 （参数 in  out z列表）
+is
+
+begin
+
+end;
+
+
+触发器
+语句触发器 不包含 for each row
+
+行级触发器：包含 for each row 
+
+
+触发器 定义
+create or replace trigger  t
+after 
+insert
+on person
+declare
+
+begin
+	
+end;
+触发 t
+insert into sperson values(1,'sd');
+
+
+create or replace trigger t2
+before
+update
+for each row 
+declare 
+
+begin
+	if :old.sal> :new.sal then
+			raise_application_error(-20001,'budas');  触发错误信息
+		end if;
+end;
+
+触发 t2
+
+update emp set sal=sal-1 where empno = 7788;
+commit;

@@ -1,0 +1,108 @@
+
+
+
+请求头名称：请求头值 request.getheader();  获取一下的请求信息
+	User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息
+	可以在服务器端获取该头的信息，解决浏览器的兼容性问题
+	Referer:http://localhost/login.html
+	告诉服务器，我（当前请求）从哪里来？
+
+1，获取请求方式：GET
+		String getMethod()
+
+		2,获取虚拟目录:/day14  (重点)
+			String getContextPath();
+
+		3,获取Servlet路径：/dome1
+			String getServletPath()
+		4,获取get方式请求参数 name=zhangsan
+
+			String getQueryString()
+		5,获取请求URI：/day14/deom1  (重点)
+			String getRequestURl()  :/day14/deom1
+				URL：统一资源定位符: http://localhost/day14/demo1
+				URI：同一资源标识符：/day14/demo1
+			tringBuffer getRequestURL(): http://localhost/day14/demo1
+
+		6，获取协议及版本 ： HTTP/1.1
+			String getProtocol()
+
+		7,获取客户机的IP地址:(谁访问你 就输出谁的IP地址  返回IPV6的IP地址)
+			String getRemoteAddr();
+
+内部资源跳转
+	2，请求转发:一种在服务器内部的资源跳转方式
+				1，步骤
+					通过request对象获取请求转发器对象：RequestDispathcher getRequestDispathcher(String response);是下一个的访问路径
+					使用RequestDispatcher对象来进行转发： forward(ServletRequest request,ServletResponse response);
+
+	3，共享数据
+				域对象：一个有作用范围的对象，可以再范围内共享数据
+				request域；代表一次请求的范围，一般用于请求转发对个资源中共享数据
+				方法
+					void setAttribute(String name ,Object obj);储存数据
+					Object getAttritude(String name);通过键获取值
+					void removeAttribute(String name);通过键移除键值对
+
+
+
+
+响应
+
+		2. 响应头：
+				1. 格式：头名称： 值
+				2. 常见的响应头：
+					1. Content-Type：服务器告诉客户端本次响应体数据格式以及编码格式
+							Content-Type: text/html;charset=UTF-8    rep.setContextType("text/html;charset=UTF-8");
+					2. Content-disposition：服务器告诉客户端以什么格式打开响应体数据
+						* 值：
+							* in-line:默认值,在当前页面内打开
+							* attachment;filename=xxx：以附件形式打开响应体。文件下载
+
+
+
+		* 重定向的特点:redirect   
+				*  response.sendRedirect("/day15/responseDemo2");
+				1. 地址栏发生变化
+				2. 重定向可以访问其他站点(服务器)的资源
+				3. 重定向是两次请求。不能使用request对象来共享数据    
+
+			* 转发的特点:forward
+				*  request.getRequestDispatcher("/successServlet").forward(request, response);
+				1. 转发地址栏路径不变
+				2. 转发只能访问当前服务器下的资源
+				3. 转发是一次请求，可以使用request对象来共享数据
+			
+			* forward 和 redirect 区别
+				* 注意：写路径的时候，转发，不需要加虚拟目录，但是重定向必须要加虚拟目录  
+
+
+
+* 路径写法：
+				1. 路径分类
+					1. 相对路径：通过相对路径不可以确定唯一资源
+						* 如：./index.html    index.html
+						* 不以/开头，以.开头路径
+
+						* 规则：找到当前资源和目标资源之间的相对位置关系
+							* ./：当前目录      
+							* ../:后退一级目录
+					2. 绝对路径：通过绝对路径可以确定唯一资源
+						* 如：http://localhost/day15/responseDemo2		/day15/responseDemo2
+						* 以/开头的路径
+
+						* 规则：判断定义的路径是给谁用的？判断请求将来从哪儿发出
+							* 给客户端浏览器使用：需要加虚拟目录(项目的访问路径)
+								* 建议虚拟目录动态获取：request.getContextPath()
+								* <a> , <form> 重定向...   
+							* 给服务器使用：不需要加虚拟目录
+								* 转发路径
+
+				简单区分相对路径和绝对路径：
+					相对路径：./开头或者不带任何符号
+					绝对路径：/开头
+
+
+		* 获取：String getMimeType(String file)      告知浏览器如何采用什么方式来解析我的文件
+
+	

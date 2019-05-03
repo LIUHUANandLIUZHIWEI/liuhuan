@@ -1,0 +1,4 @@
+超链接传参  href=“dasda?id=2”  可以使用request.getParament("id"); 获取
+
+selected  获取下拉列表的焦点 
+checked  获取单选框的焦点

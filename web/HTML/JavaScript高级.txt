@@ -1,0 +1,190 @@
+JavaScript：我们主要是学习校验表单内容
+	1ECMAScript：
+	BOM： Browser Object Model 浏览器对象模型
+	DOM：Document Object Model 文档对象模型
+		事件 onclick 单击事件
+		<input type='button' value="按钮" onclick='fun()'>
+DOM简单学习;
+	功能：控制HTML文档的内容
+	代码：获取页面标签（元素）对象 ： Element
+		* document.geyElementById("Id值")：通过元素的id获取元素对象
+	
+	操作ELement对象：
+		修改属性值：
+			明确获取的对象是那一个？
+			查看API文档，找其中有哪些属性可以设置
+		修改标签体内容：
+			属性：innerHtml  document.getElementByID（该标签的ID）.innerHTML=“改变的内容”；
+			获取元素对象
+			使用innerHTML属性修改标签体内容
+
+#######DOM 就是获取标签的属性 对属性进行操作
+
+	BOM ： Browser Object Model 浏览器对象模型 
+		将浏览器各个组成部分封装成对象
+			window 对象（窗口对象）
+			Location 地址栏对象
+			Navigator：浏览器对象（了解）
+			History:历史记录对象
+			Screen：显示器对象（了解）
+
+	window对象
+		创建：
+		方法：
+			与弹出窗口相关
+					alert（弹出内容） 警告框
+					confirm（弹出内容）对话框 如果用户点击确定 就返回true否则false
+					prompt（弹出内容）显示提示用户输入的对话框		
+						返回值：用户输入的值
+			与开闭有关的方法
+					close()关闭浏览器窗口 返回一个关闭的网址 谁调用他 他就关闭谁
+					open（网址）打开一个新的浏览器窗口  返回一个window对象
+						可以用返回的window对象调用close 就可以关闭 open打开的窗口
+			与定时器有关的方法：
+					setTimeout（函数，时间）在指定的毫秒数后调用函数或计算表达式
+					clearTimeout（暂停时间对象）：取消有setTimeout的方法设置的时间
+					setInterval（方法或函数，时间）；按照毫秒数 周期来调用此函数或表达式
+					clearInterval（暂停时间对象）：取消周期时间需要
+			
+
+		属性：
+			可以获取其他BOM对象
+			history，location，Navigator，Screen
+			可以获取DOM对象
+			document
+		特点：window对象可以不创建对象，可以直接使用 window.方法名（）；
+			window引用可以省略Location对象;
+	方法;
+		reload（）重写刷新此页面
+	属性：
+		href 设置或返回完整的URL  获取当前目录的URl完整路径 也可以赋值地址 对象点href=“www.baidu.com” 在调用他时就会跳到百度
+		
+		history对象
+			创建和获取
+				window.history
+				history
+			方法：
+				back() 加载history列表的前一个URL 并跳转到前一个页面
+				forward（） 加载history列表中的下一个URl并跳转到后一个页面
+				go（个数）加载history列表中的某一个页面 可以选择个数
+			属性
+				length 返回当前窗口历史列表中的URL数量。
+
+		DOM
+	概念：Document Object Model 文档对象模型
+		将标记语言的各个文档的各个部分，封装为对象，可以使用这些对象，对标记语言文档进行增删改查的动态操作（可以删除标签和添加标签）
+		W3C DOM 标准被分为3个不同部分:
+		核心 DOM- 针对如何结构化文档的标准模型
+			Document：文档对象
+			Element：元素对象
+			Attribute：属性对象
+			Text：文本对象
+			Comment：注释对象
+
+			Node：节点对象，其他5个的父父对象
+		XML DOM - 针对XML文档的标准模型
+		HTML DOM - 针对HTML文档的标准模型
+
+核心 DOM- 针对如何结构化文档的标准模型
+			Document：文档对象
+				创建（获取）：
+					在HTMLDOM模型中可以使用window对象来获取
+ 					window.document
+					document
+				方法：
+					获取Element对象：
+						getElementById():根据id属性值获取元素对象，ID属性值一般唯一
+						getElementsByTagName（）：根据元素名称获取元素（标签）对象们，返回的是一个数组
+						getElementsByClassName()：根据Class属性值获取元素对象们，返回值是一个数组
+						getElementsByName(）： 根据name属性值获取元素对象们
+					创建其他DOM对象方法： 
+						setAttribute():添加属性 里面放一个属性名 ， 属性效果 例如“href“，”www.baidu.com”
+						createAttribute(name)：
+						removeAttribute():删除属性 里面添加属性名字 如href
+						createComment()；
+						createElement()；创建（元素）标签 创建一个新标签 可以放入父标签中 使用父标签点appendChild(新标签)；
+						createTextNode();可以在创建的标签中 放入字符串或变量 使用方法 标签对象点createTextNode，返回此标签对象
+				
+				属性：
+						
+			Element：元素对象 
+				获取和创建：通过document来获取和创建
+				方法；
+						removeAttribute（）；删除属性
+						setAttribute（）；设置属性
+
+			Node：节点对象，其他5个的父对象
+	document.getElementById("id").value 返回的标签内的内容
+				特点：所有DOM对象都可以被认为是一个节点
+				方法：
+					CRUD dom树：
+						appendChild():向节点的子节点列表的结尾添加新的子节点。 可以将创建好的标签放入其中
+						removeChild();删除（并返回）当前节点的指定子节点。 
+						replaceChild():用新节点替换一个子节点。
+						createTextNode（）；添加文本到标签中
+				属性：
+						parentNode();返回当前标签的父标签
+
+	####超链接功能
+		 
+		2点击后跳转到href指定的url
+		
+		需求：保留1功能 去掉2功能
+		实现：href=“JavaScript：void(0)”
+		this代表自己超链接对象
+
+HTML DOM 
+	标签体的设置和获取：innerHTML
+		innerHTML=“” 这里不仅可以写标签（在内部创建标签） 还可以写 文字 返回值是它标签内的内容，
+	使用HTML元素对象的属性
+	控制样式 ：
+	第一种：修改样式方法：获取标签对象  用标签对象.style.css中的属性(如color)=“属性中的值（如red）”； 如果属性是 font-size 就写成 fontSize
+		style 是每个标签中都有的
+	第二种：先提前定义好css 
+		设置它的class或id或name  使用标签对象.className=“定义好的css 名字” className设置器
+
+
+事件 监听机制：
+	概念：某些组件被执行了某些操作后，触发某些代码的执行。
+		事件：某些操作，如单击 双击，键盘按下了，鼠标移动了
+		事件源：组件。如按钮 ，文本输入框。。
+		监听器：代码。
+		注册监听：将事件、事件源、监听器结合在一起。当事件源上发生某个事件，则触发执行某个监听器代码。
+	常见的事件：
+		点击事件：
+		onclick：单击事件
+		ondblclick:双击事件
+		
+		焦点事件：
+		onblur: 失去焦点
+		onfocus：元素获取焦点。
+
+		加载事件：
+		onload：一张页面或一幅图像完成加载
+	
+		鼠标事件：
+		onmousedown： 鼠标按钮被按下
+			定义方法时，定义一个形参，接收event对象
+			event对象button属性可以获取鼠标按钮键被点击了
+		onmouseup：鼠标按键被松开
+		onmousemove：鼠标被移动
+		onmouseover：鼠标被移到某元素之上
+		onmouseout：鼠标从某元素移开。
+		
+		键盘事件：
+		onkeydown :某个键盘按键被按下  keyCode方法
+		onkeyup	：某个键盘被松开
+		onkeypress：某个键盘按键被按下并松开。
+
+		选择和改变
+		onchange 域的内容被改变
+		onselect 文本被选中
+
+		表单事件
+		onsubmit 确定按钮被点击
+			可以阻止表单提交  获取form表单的对象.onsubmit=function（）{ 这里如果返回false 表单就不会提交 否则就会提交 } 
+		onreset 重置按钮被点击
+		
+	
+	
+		

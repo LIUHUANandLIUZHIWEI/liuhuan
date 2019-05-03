@@ -1,0 +1,19 @@
+会话  
+在java中的会话就是   打开浏览器到关闭浏览器之间做的一系列操作 就是会话
+
+cookies 是客户端 会话技术 就是  将数据保存包客户端
+
+response.addcookie(new Cookie);响应数据到浏览器 并保存在cookie
+
+setMaxAge(int s )
+正数 //将cookies 保存到硬盘 时间秒数 到时间自动删除
+负数 //默认值  浏览器关闭 自动删除
+0	// 从硬盘上删除cookies
+
+cookie 的类型
+	会话级别的cookie 
+	持久级别的cookie 
+
+请求头和响应头（HTTP协议） 中不能包含中文   就算包含也是需要进行编码和解码
+cookie.setPath(范围路径) "/"代表所有 
+
