@@ -1,0 +1,360 @@
+MyBatis
+
+	1，什么是框架
+		它是我们软件开发中的一套的解决方案，不同的框架解决的是不同的问题。
+		使用框架的好处
+			框架封装了很多的细节，是开发者可以使用极简的方式实现功能，大大提高了开发效率
+	2；三层架构
+		表现层：
+			是用于展示数据的
+		业务层：
+			是处理业务需求的
+		持久层
+			是和数据库交互的
+	3 持久层技术解决方案
+		JDBC技术：
+			Connection
+			PreparedStatement
+			ResultSet
+		Spring的JDBCTemplate：
+			Spring中对jdbc的简单封装
+		Apache的DBUtils:
+			它和Spring的JDBCTemplate很像，也是对Jdbc的简单封装
+		以上这些都不是框架
+			JDBC是规范
+			Spring的JDBCTemplate和Apache的DBUtils都是只是工具类
+	MyBatist框架的概述
+		mybatis是以个优秀的基于java的持久层框架，它内部封装了jdbc，使开发者只需要关注SQL语句本身，而不需要花费精力去处理加载驱动，创建连接，创建statement等繁琐的过程
+		mybatis通过xml或注解的方式将要执行的各种statement配置起来，并通过java对象和statement中SQL的动态参数进行映射生成最终执行的SQL语句，最后由mybatis框架执行SQL并将结果映射为java对象并返回，
+		采用OORM思想解决了实体和数据库映射的问题，对技jdbc进行封装，屏蔽了jdbc API底层访问细节，使我们不用与jdbc API 打交道，就可以完成对数据库的持久化操作。
+		mybatis是一个持久层框架，用java编写的
+		它封装了jdbc操作的很多细节，使开发者只需要关注SQL语句本身，而无需关注注册驱动，创建连接等繁杂过程
+		它使用了ORM思想实现了结果集的封装
+		
+		ORM
+			Object Relational Mapping 对象关系映射
+				简单说：
+					就是把数据库表和实体类及实体类的属性对应起来
+					然我们可以操作实体类就实现操作数据库表。
+
+		今天我们需要做到
+			实体类中的属性和数据库表的字段名保持一致。
+
+	mybatis的入门
+		mybatis的环境搭建
+			1，创建user表
+			2 pom.xml 配置导入依赖 <packaging>jar</pagckaging>
+				导入mybatis  jar包
+						<!-- 导入mybatisjar包 -->
+					<dependencies>
+						<dependency>
+						<groupId>org.mybatis</groupId>
+						<artifactId>mybatis<.artifactId>
+						<version>3.4.5</version> //版本信息
+					</dependency>
+						<!--导入mysqljar包-->	 
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>1.2.12</version>
+					</denpendency>	
+
+						如果只需要myBatis 只需要上面两个								
+	
+						<!--导入log4j jar 包-->
+					<denpendency>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+						<version>1.2.12</version>	
+					</denpendency>
+						<!--导入Junit jar 包-->
+					<denpendency>
+						<groupId>junit</groupId>
+						<artifactId>juntit</artifactId>
+						<version>4.10</version>
+					</denpendency>
+
+					</dependencies>
+
+
+		编写JavaBean 和数据库一样的字段名
+		编写Dao接口 （持久层接口）
+
+		mybatis的入门案例
+
+
+				mybatis环境搭建
+					在resources下写入xml名字可以随便写
+						写入主配置 约束
+				<?xml version="1.0" encoding="utf-8">
+					<!DOCTYPE cofiguration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+								"http://mybatis.org/dtd/mybatis-3-config.dtd">
+							<!--mybatis 主配置文件-->
+					<configuration>根标签
+						<!-- 环境配置 -->	这个随便写
+						<environments default="mysql"> 要想这个属性起作用 那么下面的id 属性也要写
+							<!--配置mysql环境-->
+							<environment id="mysql">
+								<!--配置事务的类型-->
+								<transactionMapper type="JDBC"></trabsactionMapper>
+								<!--配置数据源（连接池）-->
+								<dataSource type="POOLED"></dataSource>
+								<!--配置连接数据库的4个基本信息-->
+									<property name="dirver" value="com.mysql.jdbc.Driver"/>
+									<property name="url" value="jdbc:mysql://localhost:3306/yellow"/>
+									<property name="username" value="root"/>
+									<property name="password" value="123456"/>
+							</environment>	
+						</environments>
+
+					<!--指定映射文件的位置 映射配置文件的是每个dao独立配置文件
+						如果使用注解来配置的话，此处应该使用class属性指定被注解的dao全限定类名
+							com.itcast.dao.IUserDao
+						-->
+						<mappers>			需要在resources中建立
+							<mapper resource="com/itheima/dao/IUserDao.xml">
+						<!--package标签是用于指定dao接口所在的包，当指定了之后就不需要在写Mapper以及resource或class了-->
+							<package name="写上接口的所有包名 不需要写上接口的名称">
+						</mappers>
+					</configutation>
+
+
+			配置mappersxml 
+				<?xml version="1.0" encoding="UTF-8"?>
+						<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+								"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+					<mapper namespace="cn.itcast.dao.IUserDao">写dao接口的全限定类名
+						<!--配置查询所有-->
+							<select id="Dao接口的方法"  ResultType="返回值类型 是类的话写全限定类名">
+							查询语句 select * from user 
+							</select>
+					</mapper>
+
+
+		环境搭建的注意事项
+				第一个：创建IUserDao.xml 和 IUserDao.java 时名称是为了和之前的知识保持一致。
+					在创建Mybatis中它把持久层的操作接口名称和映射文件也叫做：Mapper
+					所以：IUserDao 和 IUserMapper是一样的
+				第二个：在IDEA中创建目录的时候，它和包是不一样的
+					包在创建时：com.itcast.dao它是三级目录
+					目录在创建时。com.itcast.dao是一级目录
+				第三个：mybatis的映射配置文件位置必须和接口的包结构相同
+				第四个：映射配置文件的Mapper标签namespace的取值必须是dao接口的全限定类名
+				第五个：映射配置文件的操作配置，id属性的取值必须是dao接口方法名
+
+				当我们遵从了第三，四，五点之后，我们在开发中就无须在写dao的实现类
+
+
+		入门案例
+			1，读取配置文件
+					InputSteam in=Resources.getResourceAsStream（"SqlMapConfig.xml");主配置文件
+			2，创建SQLSessionFactory工厂
+					SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
+
+					SqlSessionFactory fact=builder.build(in);//这是一个接口不能new 
+			3，使用工厂生产SQLSession对象
+					SqlSession session = fact.openSession();
+			4，使用SQLSession创建Dao接口的代理对象 （动态代理）
+					IUserDao userdao=session.getMapper(IUser.class);
+			5，使用代理对象执行方法
+				List<User> users=userdao.finAll();
+				System.out.println(users);
+			6释放资源
+			session.close();
+			in.close();
+		注意事项：
+			不要忘记在映射配置中告知mybatis要封装到	那个实体类中
+			配置方式：指定实体类的权限点类名
+
+		使用注解配置 
+			pom.xml配置不用变
+			主配置文件不用变
+			IUserDao.xml可以不需要了
+				要在UserDao findAll方法上写上 @Select("select * from user")
+			在主配置的mappers 不需要resource 属性就不需要了  要写上 class属性指定被注解的dao全限定类名
+
+		mybatis基于注解的入门案例
+				把IUserDao.xml移除，在dao接口的方法上使用@Select注解 ，并且指定SQL语句
+				同时需要在SqlMapConfig.xml中的Mapper配置时，使用class属性指定dao接口的全限定类名
+		明确：
+			我们在实际开发中，都是越简便越好，所以都是采用不写dao实现类的方式
+			不管是xml还是注解配置。
+			但是MyBatis是支持实现类的
+
+		使用实现类实现
+			 编写继承IUserDao接口的实现类
+				session是有直接运行SQL的方法的 session.select***()
+				在实现类中需要写上工厂
+					private SQLSessionFactory factory；
+					写上构造器传入SqlSessionFactory
+					public UserDaoImp （SqlSessionFactory factory）{
+
+							this.factory=factory;
+								}
+					在实现方法中写上
+						//使用工厂创建SQLSession对象
+						SqlSession session=factory.openSession();
+						//使用session执行查询所有方法
+						List<User> list=session.selectList("com.itcast.dao.User.findAll"); //这里需要写上在IUserDao.xml中根标签的属性上的nameSpace上的名字加上 在写上 方法名 com.itcast.dao.User.findAll
+						session.close();
+						//返回查询结果
+						return list;
+
+					在测试类中写
+						//读取配置文件
+							InputStream in=ResourceAsStream("SqlMapConfig.xml");
+						//创建SQLSessionFactory工厂
+							SqlSessionFactoryBuilder bulider=new SqlSessionFactoryBuilder();
+							SqlSessionFactory factory=bulider.build(in);
+						//使用工厂创建dao对象
+							IUserDao userDao=new UserDaoImp(factory);
+						//使用代理对象执行方法
+							List<User> users = userDao.findAll();
+							System.out.println(users);
+						//释放资源
+						session.close();
+		保存数据方法
+				在IUserDao.xml中写上 方法名	 传入的类型 如果是JavaBean类型就写全限定类名
+					<insert id="savaUser" parameterType="com.itcast.Dao.UserDao">
+									//写#{username}这里要写上在user类中的 属性名称对应
+				<insert into user(username,address,sex,birthday) values()
+					</insert>
+
+				@Before//测试方法执行之前执行
+				@After//测试方法执行完后执行 
+		注意事项需要 提交事务  他默认是手动手动提交事务  SQLSession.commit();//在更新数据库时一定要写上
+
+		select last_insert_id():可以获取添加参数后的id   
+				<!--保存用户-->
+			<insert id="方法名" parameterType="传入的参数类型 全限定类名">
+				<!--配置插入操作后，获取插入数据的id -->
+				（必须和实体类一致）实体类的名称	数据库id的值   返回的数据类型	获取插入后的id  BEFORE 获取插入前的id
+				<selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+					select last_insert_id()
+				</selectKsy>
+			insert into user (username,address,sex,birthday) values(#{username},#{address},#{sex},#{birthday})
+			</insert>
+
+
+		parameterType （输入类型）
+			传递简单类型
+			传递pojo对象
+				MyBatis使用ognl表达式解析对象字段的值，#{}或者${}括号的值为pojo属性名称
+			
+			传递pojo包装对象
+				在开发中通过pojo传递条件，查询条件是综合的查询条件不仅包括用户查询条件还包括其他的查询条件
+					（比如将用户购买商品信息也作为查询条件），这时可以使用包装类对象传递输入参数。pojo类中包括pojo
+				
+				需求：根据用户名查询用户信息，查询条件放到QueryVo的user属性中。 pojo对象也就是实体类对象JavaBean
+
+			OGNL表达式：Object Graphic Navigation language
+				    对象   图        导航	语言
+			它是通过对象的取值方法来获取数据，在写法上吧get给省略了。
+				比如：我们获取用户的名称
+						类的写法：user.getUsername();
+						ONGL表达式写法：user.username
+					mybatis 中为什么能直接写username，而不用user呢：
+						因为在parameterType中已经提供了属性所属的类，所以此时不需要写对象名 
+ 				
+		起别名的原因是 一旦实体类的属性和数据库的属性不匹配就会发生查询不到数据 所以这里需要用到别名
+		
+			别名<!--配置 查询结果的列名和实体类的属性名的对应关系-->    在IUDao.xml中配置  Result的别名
+				<resultMap id="随便取" type="javaBean 实体类全限定类名">
+					<!--下面的需要和实体类的属性需要和数据库的类名相同 -->
+
+					<id property="实体类id" column="数据库id"></id>//主键字段的对应
+						//下面是非主键的对应
+					<result property="username" column="name"></result>
+							......
+				</resultMap>
+
+				注意：在配置上面的以后 
+					在查询的语句中 需要把resultType属性改为 resultMap="上面的id写什么这里就写什么"
+				也可以在SQL语句上写别名  这样效率会提高 但编码效率会降低
+
+
+		配置上的开发  调整
+
+			<property>改造
+		在主配置文件中可以这样写
+			<propertys>	
+				<property name="driver" value="com.jdbc.mysql.Driver"/>
+				<property name="url" value="jdbc:mysql://localhsot:3306/yellow?characrteEncoding=utf-8"/>
+				<property name="password" value="123456"/>
+			</propertys>
+			那么在下面就可以这样写  
+				<dataSource type="POOLED">
+					<property name="driver" value="#{driver}"/>
+					<property name="url" value="#{url}"/>
+					<property name="password" value="#{password}"/>
+				</dataSource>
+			当然 这只是个例子 他还可以从外部 引入文件
+				<!--配置propertys 可以在标签内部配置连接数据库的信息，也可以通过属性引入外部配置文件信息
+						resource属性：常用的属性
+							用于配置文件的指定位置，是按类路径的写法来写，并且必须存在于类路径下。
+						url属性：是要按照url的写法来写地址
+							URL：Uniform Resource Locator:同一资源定位符，可以唯一标识一个资源的位置
+							它的写法：
+								http://localhost:8080/servletUser
+								协议  主机名  端口  URI（资源标识符）它是在应用中可以唯一定位一个资源
+				-->
+				<propertys resource="jdbcPro.properties">	
+				
+				</propertys>
+
+					<dataSource type="POOLED">//jdbc.Pro 内部怎么写{ }中就需要怎么写
+						<property name="driver" value="#{driver}"/>
+						<property name="url" value="#{url}"/>
+						<property name="password" value="#{password}"/>
+					</dataSource>
+
+				
+
+
+		使用typeAlias配置别名，它只能配置Dao中的别名
+				<typeAliases>
+				<!--typeAlias用于配置别名。type属性指定的是实体类全限定类名，alias属性指定别名，当指定别名就不在区分大小写-->
+					//<typeAlias type="Dao层的全限定类名" alias="别名">
+					<!--还可以这样  这个用于指定要配置别名的包，当指定之后，该包下的实体类都会注册别名，不在区分大小写-->
+					<package name="只需要写上类上的全部包名而不需要写 类名"></package> 	
+				</typeAliases>
+
+
+
+		MyBatis核心配置文件概述
+			Mybatis 常用配置解析
+					1，environments标签
+						其中事物管理器（transactionManager）类型有两种
+							JDBC：这个配置就是直接使用了JDBC的提交和回滚设置，它依赖于从数据源得到的连接来管理事务的整个作用域。							    		MANAGED：这个配置几乎没做什么，它从来不提交和回滚一个连接，而是让容器来管理事务的整个生命周期（比如JEE应								 用服务器的上下文）。默认情况下它会关闭连接，然而一些容器并不希望这样，因此需要将closeConnection								 属性设置为false来阻止他默认的关闭行为。
+						其中，数据源（DataSource）类型有三种：
+							UNPOOLED：这和数据源实现只是每次被请求时打开和关闭连接。
+							POOLED：这种数据源的实现利用‘池’的概念将JDBC连接对象组织起来。
+							JNDI：这个数据源的实现是为了能在如EJB或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置							      一个JNDI上下文的引用。
+					2，mapper标签
+						该标签的作用是加载映射的，加载方式有如下几种：
+							使用相对路径的资源引用：<mappper resource="org/mybatis/builder/AuthorMapper.xml"/>
+							使用完全限定资源定位符（URL）：<mapper url="file:///var/mapppers/AuthorMapper.xml"/>
+							使用映射器接口实现类的完全限定类名，例如：<mapper class="org.mybatis.builder.AuthorMapper"/>
+							将包内的映射器接口实现全部注册为映射器，<package name="org.mybatis.builder"/>
+
+
+			MyBatis的Dao层实现
+				动态代理开发方式
+					1，代理开发方式介绍
+						采用Mybatis的代理开发方式实现DAO层的开发，这种方式是我们后面进入企业的主流
+						Mapper接口的开发方法只需要程序员编写接口（相当Dao接口），由Mybatis框架根据接口定义创建接口的动态代理对象，代理
+						对象的方法体同上边Dao接口实现类方法。
+						Mapper接口开发需要遵循以下规范：
+							1，Mapper.xml文件中的namespace与Mapper接口的全限定名相同
+							2，Mapper接口方法名和Mapper.xml中定义的每个statement的id相同
+							3，Mapper接口方法名的输入参数类型和Mapper.xml中定义的每个SQL的parameterType的类型相同
+							4，Mapper接口方法的输出参数类型和Mapper.xml中定义的每个SQL的resultType的类型相同
+							
+
+			MyBatis核心配置文件深入
+				plugins标签
+					MyBatis可以使用第三方插件来对功能进行扩展，分页助手PageHelper是将分页的复杂操作进行封装，使用简单的方式即可获得分页的相关						数据
+					开发步骤：
+						1，导入通用PageHelper的坐标
+						2，在mybatis核心配置文件中配置PageHelper插件
+						3，测试分页数据获取

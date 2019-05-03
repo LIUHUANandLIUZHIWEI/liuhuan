@@ -1,0 +1,2 @@
+sqlsession;.insert() paramryrtType  commit() 提交事务namespace   paraemeterType() 修改数据 typeHandisers 类型处理器 settings 设置 properties jdbc 配置 environments 指定默认环境名称  environment 指定当前环境的名称 DataSource  有三种；类型
+为什么  不能使用 cn.itcast.WebNew.Dao 下的UserDao.xml

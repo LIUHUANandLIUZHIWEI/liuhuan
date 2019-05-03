@@ -1,0 +1,176 @@
+@RequestMapper注解  中属性的大概意思  value 和 path一样都是  请求的地址   method 是设置请求方式 必须是这种方式才可以方法此方法   
+				params是设置参数它是一个数组  在请求参数中必须包含某些参数名 才可以访问此方法
+				headers是设置请求头的，它是一个数组 ，在请求头中必须包含此数组中的请求头才可以访问此方法
+				consumes返回的类型 如果不写默认是返回一个路径地址的 如 application/json 就是返回json对象字符串
+				produces返回类型的编码集 如@RequestMapping(value = "/pets/{petId}", produces="MediaType.APPLICATION_JSON_VALUE"+";charset=utf-8")
+
+@RequestBody 是设置返回的不在是路径而是  字符串或json类型  还可以作用于参数上 那此用处在于将JOSN中的内容一形参名相同的 给予赋值 是用于 请求体中的数据 get是没有请求体的  也可以封装成对象 作用于参数上  还得是json格式的数据
+
+
+@RequestParam 是设置请求参数的名字问题  如果请求参数和方法中形参的名字不一 那么 方法打印出的是null 这时 就需要使用这个  在形参前加上这个 并写上 请求参数的key
+		不过在请求参数中必须要有此key和value ，不过 required 属性就是解决这个问题的它默认是true 只要设置为false就可以了 
+		defaultValue属性：当没有指定请求参数时，则使用指定的默认值赋值 就如果请求体中没有指定参数  就会使用此属性内的数据  这个数据自己写
+			注意在参数上只能放一个
+				
+
+	
+获得Restful风格的参数
+	Restful是一种软件架构风格，设计风格，而不是标准，只是提供了一组设计原则和约束条件，主要用户客户端和服务器交互类的软件，基于这个风格设计的软件可以更加简洁		，更有层次，更易于实现缓存机制等。
+		
+	Restful风格的请求是使用“url+请求方式”表示一次请求目的地，HTTP协议里面四个表示操作方式的动词如下:
+		GET：用于获取资源
+		POST：用于新建资源
+		PUT：用于更新资源
+		DELETE：用于删除资源
+
+	例如：
+			/user/1  GET 	:得到id=1的user
+			/user/1  DELETE :删除id=1的user
+			/user/1  PUT	：更新id=1的user
+			/user	 POST	：新增user
+
+
+
+		http://localhost:8080/itcast/quicke/zhangsan
+
+		在上述url地址/user/1就是请求 参数，SpringMVC中可以使用占位符进行参数绑定。地址/user/1可以写成/user/${id}占位符{id}对应的就是1的值。
+		在业务方法中我们可以使用@PathVariable注解进行注解进行占位符匹配获取工作
+
+		例子：
+			@RequestMapping("/quicke/${name}")
+			@RequestBody
+			public void  quicke(@PathVariable(value="name" required=true) String name){
+			
+						}
+
+
+		自定义转换器需要实现Converter接口 它有两个人泛型只需要写上 需要转换的类型和转成什么样的类型即可  
+			要在spring-mvc配置文件中声明
+					ConversionServiceFactoryBean
+			在引用自己写得转换器
+
+		<bean id="dd" class="ConversionServiceFactoryBean的全限定类名"><property name="converters"><bean id="ss" class="自己写的自定义装换器全限定类名"></bean></property></bean>
+
+		在<mvc:annotation-driven conversion-service="dd">
+
+		Converter  转换器
+
+  <bean id="id" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--继承了 Conversion 接口的类 -->
+            </set>
+        </property>
+    </bean>
+
+
+
+
+
+
+
+
+关键点
+
+		监听器 是用来监听 域对象的创建和销毁的
+		ServletContext  
+			是在web项目已启动就会创建  Web项目销毁时 它才会销毁
+
+ServletContext  .getInitParameter 可以获取Web.xml中全局配置的值   	
+
+MVC  ： 将业务逻辑和视图展示做分离
+		概念 ：SpringMVC是一种基于Java实现MVC 设计模型的请求驱动类型的轻量级Web框架
+
+			让一个简单的Java类称为处理请求的控制器
+
+		tomcat   步骤
+				1接收请求
+				2创建Request对象
+				3创建Response对象
+				4查找对应的servlet（请求的资源）
+
+
+	SpringMVC 是一个基于组件的框架  每一件事都用得到了 组件
+
+
+	SpringMVC三大组件  处理器映射器    处理器适配器   视图解析器
+
+	<mvc:default-servlet-handler>
+			是当SpringMVC找不到处理器的时候会交给tomcat帮你去查找静态资源
+
+	restfull 风格
+		是让每一个url唯一定位一个服务区资源
+
+
+
+
+	文件上传
+		浏览器要满足扫描条件才能进行文件上传
+		文件上传的原理
+				当浏览器满足三个提交之后  以后再提交表单，表单请求体就会用分割线将请求体分成不同的部分（每个表单项都会有对应的一个部分）
+				如果想在服务器里面获取文件内容，就可以先用分割线吧请求体分成不同的部分，然后在获取对应部分的内容
+
+
+	文件上传客户端三要素
+		需要表单是post方式
+		表单项type file
+		表单需要加上encype=multipart/form-data
+
+
+		不设置enctype  表单形式是以 键值对方式请求到服务器
+
+		如果设置mutilpart-urlencoded则是以  分块形式发送到服务器
+
+配置文件上传解析器
+坐标 commons-fileUpload依赖
+和commons-id
+		<bean class="org.springforwork,web.multipatr.commons.CommonsMultipartResol">
+			配置 参数
+		</bean>
+
+	MultipartFile  解析文件上传的Bean
+
+
+	
+	拦截器（interceptor）
+		用于对处理器进行预处理和后处理
+		将拦截器按一定的顺序结成一条链，这条链称为
+				
+
+		拦截器只能拦截SpringMVC框架特有的，过滤器是所有web项目都能使用的，javaWeb
+
+
+		
+
+		快速入门
+			创建拦截器类实现interceptor接口
+	实现  preHandle在目标方法执行之前 先执行     postHandle在目标方法执行之后   视图对象返回执行之前执行  afterCompletion 在流程都执行完毕后执行  
+
+	需要在SpringMVC 中配置 
+		<mvc:interceptors>
+				<mvc:interceptor>
+					对那些资源执行拦截操作
+					<mvc:mapping path="/**"/>
+					<bean class="自己定义的拦截器类">
+
+
+
+			异常处理两种方式
+				使用SpringMVC提供的简单异常处理器SimpleMappingExceptionResolver
+				实现Spring的异常处理接口HandlerExceptionResolver自定义自己的异常处理
+
+
+		在SpringMVC中配置
+			<bean class="SimpleMappingExeprionResolver" >
+				<property name="defaultErroView" value="error"/>错误页面跳转
+					<property name="execptionMappings">
+						<map>
+							<entry key="异常类型全包名" value="错误页面"> 异常错误页面跳转	
+
+
+		自定义 
+			创建一个类实现
+
+
+		配置文件 只需要 加入
+			<bean class="自己定义的异常类">
