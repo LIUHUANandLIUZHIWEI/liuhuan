@@ -3,4 +3,4 @@ ssh-keygen -t rsa
 带pub的是秘钥 
 rsa的是私钥    有了秘钥 就可以不输入密码用户 就直接和服务器交互 也可以保证是安全的
 
-git@github.com:LIUHUANandLIUZHIWEI/liuhuan.git
+和远程仓库建立连接 git remote add 仓库名 git@g ithub.com:LIUHUANandLIUZHIWEI/liuhuan.git
