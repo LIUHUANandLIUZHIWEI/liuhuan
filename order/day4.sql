@@ -81,9 +81,6 @@ select * from emp
       select  max(emp.sal) sal,emp.deptno deptno from emp group by emp.deptno
       select * from emp p,(select  max(emp.sal) sal,emp.deptno deptno from emp group by emp.deptno) em where p.deptno=em.deptno and p.sal=em.sal
       --20.哪个部门的平均工资是最高的，列出部门号、平均工资
-     select avg(emp.sal), emp.deptno
-     from  emp 
-     group by  emp.deptno
      
     select * from dept t1,
     (select avg(emp.sal) sal,emp.deptno depto from emp  group by emp.deptno) t2
