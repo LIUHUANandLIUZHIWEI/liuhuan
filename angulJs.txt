@@ -1,0 +1,2 @@
+ng-repeat="check in entity.customAttributeItems track by $index"
+track by  $index  用来在循环时去除 产生的垃圾id值   如果没有 就会产生
